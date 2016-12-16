@@ -1,0 +1,7 @@
+<ion-tabs>
+  <ion-tab [root]="chat" tabTitle="聊天" tabIcon="text"></ion-tab>
+  <ion-tab [root]="group" tabTitle="群组" tabIcon="people"></ion-tab>
+  <ion-tab [root]="article" tabTitle="文章" tabIcon="paper"></ion-tab>
+  <ion-tab tabUrlPath='/user/home' [root]="user" tabTitle="个人" tabIcon="person"></ion-tab>
+  <router-outlet></router-outlet>
+</ion-tabs>
