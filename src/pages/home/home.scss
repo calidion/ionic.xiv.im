@@ -2,8 +2,16 @@ page-home {
 
 }
 
+ion-title {
+  position: relative;
+}
+
 .tools {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0px;
+  top: 0px;
+  ion-icon {
+    padding: 10px;
+    font-size: 20px;
+  }
 }

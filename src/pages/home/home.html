@@ -1,15 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>vig
+    <ion-title>vig程序员IM
       <div class="tools">
-        <ion-icon name="add"></ion-icon>
-        <ion-icon name="search" ></ion-icon>
+        <!--<ion-icon name="search"></ion-icon>-->
+        <ion-icon name="add" (click)="gotoAddPage()"></ion-icon>
       </div>
     </ion-title>
   </ion-navbar>
-  <ion-toolbar>
-    <ion-searchbar (input)="getItems($event)"></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>

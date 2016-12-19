@@ -1,0 +1,33 @@
+<!--
+  Generated template for the User page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>用户详情</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content class='back'>
+  <ion-list>
+    <ion-item>
+      <ion-label fixed>原密码</ion-label>
+      <ion-input type="password" name="old"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>新密码</ion-label>
+      <ion-input type="password" name="new"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>确认密码</ion-label>
+      <ion-input type="password" name="confirm"></ion-input>
+    </ion-item>
+    <div padding>
+    <button ion-button color="primary" block (click)="reset()">更新密码</button>
+  </div>
+  </ion-list>
+</ion-content>

@@ -1,5 +1,4 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -8,15 +7,11 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { UserPage } from '../pages/user/user';
+import { UserDetailsPage } from '../pages/user/details';
+import { UserSearchPage } from '../pages/user/search';
+import { UserPasswordResetPage } from '../pages/user/password/reset';
 
 import { UserService } from '../pages/user/service';
-
-var routers = [
-  {
-    path: 'user/home',
-    component: UserPage
-  }
-];
 
 @NgModule({
   declarations: [
@@ -25,10 +20,12 @@ var routers = [
     ContactPage,
     HomePage,
     UserPage,
-    TabsPage
+    TabsPage,
+    UserDetailsPage,
+    UserPasswordResetPage,
+    UserSearchPage
   ],
   imports: [
-    RouterModule.forRoot(routers),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -38,7 +35,10 @@ var routers = [
     ContactPage,
     HomePage,
     UserPage,
-    TabsPage
+    TabsPage,
+    UserDetailsPage,
+    UserPasswordResetPage,
+    UserSearchPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, UserService]
 })

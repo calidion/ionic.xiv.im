@@ -7,12 +7,49 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>user</ion-title>
+    <ion-title>用户中心</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class='black'>
+  <ion-list no-lines class="top black">
+    <ion-item (click)="goToDetailsPage()">
+      <ion-thumbnail item-left>
+        <ion-img src="{{user.avatar}}"> 
+        </ion-img>
+        <ion-spinner class="abs"></ion-spinner>
+      </ion-thumbnail>
+      <h2>{{user.username}}</h2>
+      <p>{{user.signature || '这家伙很懒，什么个性签名都没有留下。'}}</p>
+    </ion-item>
+  </ion-list>
+  <!--<ion-list no-lines class="top black">
+    <button ion-item (click)="goToPasswordPage()">
+      <ion-icon name="key" item-left></ion-icon>
+      修改密码
+    </button>
+  </ion-list>-->
 
+  <ion-list no-lines class="top black">
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon name="people" item-left></ion-icon>
+      我的关注
+    </button>
+  </ion-list>
+
+  <ion-list no-lines class="top black">
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon name="settings" item-left></ion-icon>
+      设置
+    </button>
+  </ion-list>
+
+  <ion-list no-lines class="top black">
+    <button ion-item (click)="goToAboutPage()">
+      <ion-icon name="help" item-left></ion-icon>
+      关于vig
+    </button>
+  </ion-list>
 </ion-content>

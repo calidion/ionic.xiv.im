@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
@@ -17,14 +18,18 @@ export class TabsPage {
   article: any = ContactPage;
   user: any = UserPage;
 
-  constructor(user: UserService) {
-    user.getProfile().then(function (data) {
+  constructor(us: UserService, navController: NavController, lc: LoadingController) {
+    let loading = lc.create({
+      content: '正在请求用户信息...'
+    });
+    loading.present();
+    us.getProfile().then(function (data) {
+      loading.dismiss();
       console.log(typeof data);
       if (data['code'] !== 0) {
-        user.auth();
+        us.auth();
       }
       console.log(data);
     });
-
   }
 }

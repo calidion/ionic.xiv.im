@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { UserService } from './service'
+import { UserDetailsPage } from './details'
+import { UserPasswordResetPage } from './password/reset';
 
 
 /*
@@ -10,20 +13,35 @@ import { NavController } from 'ionic-angular';
 */
 @Component({
   selector: 'page-user',
-  templateUrl: 'user.html'
+  templateUrl: 'user.html',
+
 })
 
 export class UserPage {
-  constructor(public navCtrl: NavController,) {
-
-    // if (!userService.isAuthenticated()) {
-    //   console.log('not authenticated');
-    //   window.location.href = userService.authUrl();
-    // }
+  user: JSON
+  constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
+    this.user = navParams.get('user') || userService.get();
+    console.log(this.user);
   }
 
   ionViewDidLoad() {
     console.log('Hello UserPage Page');
   }
+  goToDetailsPage() {
+    this.navCtrl.push(UserDetailsPage, {
+      user: this.user
+    });
+  }
+  goToPasswordPage() {
+    this.navCtrl.push(UserPasswordResetPage, {
+      user: this.user
+    });
+  }
+  goToSettingsPage() {
 
+  }
+
+  goToAboutPage() {
+    
+  }
 }
