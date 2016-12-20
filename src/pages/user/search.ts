@@ -21,6 +21,7 @@ export class UserSearchPage {
   private q
   private current
   private users
+  private json
   private userService
   constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
     this.user = navParams.get('user') || userService.get();
@@ -34,31 +35,40 @@ export class UserSearchPage {
   onUsers(users) {
     console.log('inside on Users');
     console.log(users);
-    this.users = users;
+    this.json = users;
+    this.users = users.data.items;
     clearTimeout(this.timer);
     this.timer = null;
+    console.log('inside search again');
+    console.log(this.q, this.current);
+    console.log(this.users);
     if (this.q !== this.current) {
-      this.search(this.q);
+      this.startSearch();
     }
   }
 
-  search(q) {
+  startSearch() {
+    this.timer = setTimeout((function () {
+      this.search()
+    }).bind(this), 1000);
+  }
+
+  search() {
     console.log('inside search');
     console.log(this.userService);
     console.log(this.userService.search);
-    this.userService.search(q).then(this.onUsers.bind(this));
+    this.current = this.q;
+    this.userService.search(this.q).then(this.onUsers.bind(this));
   }
 
   getItems(e) {
-    this.q = e.target.value;
-    console.log(e);
+    this.q = e.target.value.trim();
+    // console.log(e);
     console.log(e.target.value);
     if (this.timer) {
       console.log('return');
       return;
     }
-    this.current = this.q;
-    this.search(this.q);
-
+    this.startSearch();
   }
 }

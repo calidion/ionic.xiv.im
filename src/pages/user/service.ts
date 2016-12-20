@@ -35,6 +35,19 @@ export class UserService {
     }
     return json;
   }
+
+  getUser(username) {
+    var url = 'https://api.github.com/users/' + encodeURIComponent(username) + '?'
+    + 'client_id=29f4e928b4d220d773d8&client_secret=8694a890987ad26729edece51344ea3c1bf4ab8c';
+    return this.http.get(url)
+      .toPromise()
+      .then(this.onUser.bind(this))
+      .catch(this.onError);
+  }
+  onUser(res) {
+    var json = res.json();
+    return json;
+  }
   getProfile() {
     var temp = {
       "code": 0,

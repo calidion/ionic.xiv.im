@@ -10,6 +10,7 @@ import { UserPage } from '../pages/user/user';
 import { UserDetailsPage } from '../pages/user/details';
 import { UserSearchPage } from '../pages/user/search';
 import { UserPasswordResetPage } from '../pages/user/password/reset';
+import { UserItemGitHubPage } from '../pages/user/github/item';
 
 import { UserService } from '../pages/user/service';
 
@@ -23,7 +24,8 @@ import { UserService } from '../pages/user/service';
     TabsPage,
     UserDetailsPage,
     UserPasswordResetPage,
-    UserSearchPage
+    UserSearchPage,
+    UserItemGitHubPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -38,7 +40,8 @@ import { UserService } from '../pages/user/service';
     TabsPage,
     UserDetailsPage,
     UserPasswordResetPage,
-    UserSearchPage
+    UserSearchPage,
+    UserItemGitHubPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, UserService]
 })

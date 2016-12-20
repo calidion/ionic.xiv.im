@@ -1,0 +1,7 @@
+<ion-item (click)="addUser()" *ngIf="user">
+  <ion-avatar item-left>
+    <img src="{{user.avatar_url}}">
+  </ion-avatar>
+  <h2>{{user.name}}<{{user.login}}> [{{user.followers}}, {{user.following}}] </h2>
+  <p>{{user.email || '这家伙很懒，什么个性签名都没有留下。'}}</p>
+</ion-item>
