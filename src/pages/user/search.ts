@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from './service'
+import { LoadingController } from 'ionic-angular';
 
 
 /*
@@ -12,7 +13,6 @@ import { UserService } from './service'
 @Component({
   selector: 'page-user-search',
   templateUrl: 'search.html',
-
 })
 
 export class UserSearchPage {
@@ -23,7 +23,8 @@ export class UserSearchPage {
   private users
   private json
   private userService
-  constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
+  private loading
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, navParams: NavParams, userService: UserService) {
     this.user = navParams.get('user') || userService.get();
     console.log(this.user);
     this.userService = userService;
@@ -36,19 +37,39 @@ export class UserSearchPage {
     console.log('inside on Users');
     console.log(users);
     this.json = users;
-    this.users = users.data.items;
+    this.users = users.items;
     clearTimeout(this.timer);
     this.timer = null;
     console.log('inside search again');
     console.log(this.q, this.current);
     console.log(this.users);
+    this.stopProgress();
+
     if (this.q !== this.current) {
-      this.startSearch();
+      this.showProgress('正在搜索[' + this.q + ']')
+      this.search();
     }
+  }
+
+  showProgress(message) {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    this.loading = this.loadingCtrl.create({
+      content: message,
+    });
+    this.loading.present();
+  }
+  stopProgress() {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    this.loading = null;
   }
 
   startSearch() {
     this.timer = setTimeout((function () {
+      this.showProgress('正在搜索[' + this.q + ']')
       this.search()
     }).bind(this), 1000);
   }

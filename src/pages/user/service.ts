@@ -11,6 +11,10 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 
 export class UserService {
+  private githubOptions = {
+    client_id: '29f4e928b4d220d773d8',
+    client_secret: '8694a890987ad26729edece51344ea3c1bf4ab8c'
+  }
   private user
   private users
   private isLogin: boolean = false
@@ -21,8 +25,9 @@ export class UserService {
 
   }
   search(q) {
-    let options = new RequestOptions({ withCredentials: true });
-    return this.http.get(this.url + '/user/search?q=' + encodeURIComponent(q), options)
+    let url = 'https://api.github.com/search/users?q=' + encodeURIComponent(q) + '&'
+    + this.getOptions();
+    return this.http.get(url)
       .toPromise()
       .then(this.onSearch.bind(this))
       .catch(this.onError);
@@ -30,15 +35,21 @@ export class UserService {
 
   onSearch(res) {
     var json = res.json();
-    if (json.code === 0) {
-      this.users = json.data;
-    }
+    this.users = json;
     return json;
+  }
+
+  getOptions() {
+    var data = [];
+    for(var key in this.githubOptions) {
+      data.push(key + '=' + this.githubOptions[key]);
+    }
+    return data.join('&');
   }
 
   getUser(username) {
     var url = 'https://api.github.com/users/' + encodeURIComponent(username) + '?'
-    + 'client_id=29f4e928b4d220d773d8&client_secret=8694a890987ad26729edece51344ea3c1bf4ab8c';
+    + this.getOptions();
     return this.http.get(url)
       .toPromise()
       .then(this.onUser.bind(this))
