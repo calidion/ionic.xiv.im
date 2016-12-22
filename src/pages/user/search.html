@@ -17,7 +17,7 @@
 
 <ion-content class='back'>
   <ion-list no-lines *ngIf="users">
-    <user-item-github [data]=user *ngFor="let user of users">
+    <user-item-github (click)="addUser(user)" [data]=user *ngFor="let user of users">
     </user-item-github>
   </ion-list>
 </ion-content>

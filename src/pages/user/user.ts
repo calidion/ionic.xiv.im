@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from './service'
 import { UserDetailsPage } from './details'
 import { UserPasswordResetPage } from './password/reset';
-
+import { AboutPage } from '../about/about';
 
 /*
   Generated class for the User page.
@@ -42,6 +42,6 @@ export class UserPage {
   }
 
   goToAboutPage() {
-    
+     this.navCtrl.push(AboutPage);   
   }
 }

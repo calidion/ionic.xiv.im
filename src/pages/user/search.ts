@@ -92,4 +92,8 @@ export class UserSearchPage {
     }
     this.startSearch();
   }
+
+  addUser(user) {
+    console.log(user);
+  }
 }

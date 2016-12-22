@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
+import { GroupPage } from '../group/group';
 import { ContactPage } from '../contact/contact';
 import { UserPage } from '../user/user';
 import { UserService } from '../user/service'
@@ -14,7 +14,7 @@ export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
   chat: any = HomePage;
-  group: any = AboutPage;
+  group: any = GroupPage;
   article: any = ContactPage;
   user: any = UserPage;
 
