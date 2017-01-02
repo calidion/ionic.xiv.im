@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UserService } from '../service'
-import { UserDetailsPage } from '../details'
-
+import { LoadingController } from 'ionic-angular';
+import { Response } from '@angular/http';
 
 /*
   Generated class for the User page.
@@ -19,7 +19,8 @@ import { UserDetailsPage } from '../details'
 export class UserItemGitHubPage {
   user
   data
-  constructor(public navCtrl: NavController, public userService: UserService) {
+  loading
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public userService: UserService) {
   }
   ngOnInit() {
     console.log(this.data);
@@ -29,10 +30,32 @@ export class UserItemGitHubPage {
     this.user = user;
     console.log(user);
   }
-  addUser() {
-    // this.navCtrl.push(UserAddPage, {
-    //   user: this.user
-    // });
+  showProgress(message) {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    this.loading = this.loadingCtrl.create({
+      content: message,
+    });
+    this.loading.present();
+  }
+  stopProgress() {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    this.loading = null;
+  }
+  addUser(user) {
+    if (user.email) {
+      this.showProgress('正在添加【' + user.name + '好友');
+      this.userService.addFriend(user.email).then(function (res: Response) {
+        let data = res.json();
+        if (data.code === 0) {
+
+        }
+      });
+
+    }
   }
 
 }

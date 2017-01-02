@@ -1,4 +1,4 @@
-<ion-item *ngIf="user">
+<ion-item *ngIf="user" (click)="addUser(user)">
   <ion-avatar item-left>
     <img src="{{user.avatar_url}}">
   </ion-avatar>

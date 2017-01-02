@@ -95,5 +95,6 @@ export class UserSearchPage {
 
   addUser(user) {
     console.log(user);
+    this.userService.addFriend(user.email);
   }
 }

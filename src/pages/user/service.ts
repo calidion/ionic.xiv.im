@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
+import { Http, Response, RequestMethod, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -18,15 +18,13 @@ export class UserService {
   private user
   private users
   private isLogin: boolean = false
-  // private url: string = 'https://forim.localtunnel.me'
-  private url: string = 'http://localhost:3000'
-  // private url: string = 'http://forum.webfullstack.me'
+  private url: string = 'http://forum.webfullstack.me'
   constructor(private http: Http) {
 
   }
   search(q) {
     let url = 'https://api.github.com/search/users?q=' + encodeURIComponent(q) + '&'
-    + this.getOptions();
+      + this.getOptions();
     return this.http.get(url)
       .toPromise()
       .then(this.onSearch.bind(this))
@@ -41,7 +39,7 @@ export class UserService {
 
   getOptions() {
     var data = [];
-    for(var key in this.githubOptions) {
+    for (var key in this.githubOptions) {
       data.push(key + '=' + this.githubOptions[key]);
     }
     return data.join('&');
@@ -49,7 +47,7 @@ export class UserService {
 
   getUser(username) {
     var url = 'https://api.github.com/users/' + encodeURIComponent(username) + '?'
-    + this.getOptions();
+      + this.getOptions();
     return this.http.get(url)
       .toPromise()
       .then(this.onUser.bind(this))
@@ -60,25 +58,11 @@ export class UserService {
     return json;
   }
   getProfile() {
-    var temp = {
-      "code": 0,
-      "name": "Success",
-      "message": "成功！",
-      "data": {
-        "email": "calidion@gmail.com",
-        "avatar": "https://avatars.githubusercontent.com/u/131776?v=3",
-        "githubId": "131776", "githubUsername": "calidion", "githubAccessToken": "7629d0611784ea717965095ae2b58cc874456141", "active": true, "accessToken": "75148479-bc07-4180-a545-89b222ec656a", "score": "0", "id": "58519da5ae008975122a554e", "username": "calidion", "password": "f7ff9068b94aea924a554eb1b8bcd27423dac6d0", "isBlocked": false, "threads": "0", "replies": "0", "followers": "0", "followees": "0", "favoriteTags": "0", "favoriteThreads": "0", "createdAt": "2016-12-14T19:29:41.097Z", "updatedAt": "2016-12-18T19:23:42.485Z"
-      }
-    };
-    this.user = temp.data;
-    return new Promise(function (resolve) {
-      resolve(temp);
-    });
-    // let options = new RequestOptions({ withCredentials: true });
-    // return this.http.get(this.url + '/user/profile', options)
-    //   .toPromise()
-    //   .then(this.onProfile.bind(this))
-    //   .catch(this.onError);
+    let options = new RequestOptions({ withCredentials: true });
+    return this.http.get(this.url + '/user/profile', options)
+      .toPromise()
+      .then(this.onProfile.bind(this))
+      .catch(this.onError);
   }
   onProfile(res: Response) {
     var json = res.json();
@@ -102,13 +86,22 @@ export class UserService {
     return this.isLogin;
   }
   auth() {
-    // var url = 'http://forum.webfullstack.me/auth/github'
     var url = this.url + '/auth/github';
     var authUrl = url + '?url=' + encodeURIComponent(location.href);
-    alert(authUrl);
     window.location.href = authUrl;
   }
   get() {
     return this.user;
+  }
+
+  addFriend(email) {
+    let options = new RequestOptions({
+      withCredentials: true
+    });
+    return this.http.post(this.url + '/friend/add', {
+        email: email
+      }, options)
+      .toPromise()
+      .catch(this.onError);
   }
 }
