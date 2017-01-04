@@ -20,4 +20,10 @@
     <user-item-github [data]=user *ngFor="let user of users">
     </user-item-github>
   </ion-list>
+  <ion-card *ngIf="seached && (!users || !users.length)">
+
+    <ion-card-header>
+      <ion-icon name="warning" color="danger"></ion-icon>没有搜索到你要找的用户!
+    </ion-card-header>
+  </ion-card>
 </ion-content>

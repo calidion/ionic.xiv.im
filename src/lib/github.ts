@@ -10,31 +10,21 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 
-export class UserService {
+export class GitHubService {
   private githubOptions = {
     client_id: '29f4e928b4d220d773d8',
     client_secret: '8694a890987ad26729edece51344ea3c1bf4ab8c'
   }
-  private user
-  private users
-  private isLogin: boolean = false
-  private url: string = 'http://forum.webfullstack.me'
   constructor(private http: Http) {
 
   }
+
   search(q) {
     let url = 'https://api.github.com/search/users?q=' + encodeURIComponent(q) + '&'
       + this.getOptions();
     return this.http.get(url)
-      .toPromise()
-      .then(this.onSearch.bind(this))
+      .map((res: Response) => res.json())
       .catch(this.onError);
-  }
-
-  onSearch(res) {
-    var json = res.json();
-    this.users = json;
-    return json;
   }
 
   getOptions() {
@@ -49,28 +39,10 @@ export class UserService {
     var url = 'https://api.github.com/users/' + encodeURIComponent(username) + '?'
       + this.getOptions();
     return this.http.get(url)
-      .toPromise()
-      .then(this.onUser.bind(this))
+      .map((res: Response) => res.json())
       .catch(this.onError);
   }
-  onUser(res) {
-    var json = res.json();
-    return json;
-  }
-  getProfile() {
-    let options = new RequestOptions({ withCredentials: true });
-    return this.http.get(this.url + '/user/profile', options)
-      .toPromise()
-      .then(this.onProfile.bind(this))
-      .catch(this.onError);
-  }
-  onProfile(res: Response) {
-    var json = res.json();
-    if (json.code === 0) {
-      this.user = json.data;
-    }
-    return json;
-  }
+
   onError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
@@ -81,27 +53,5 @@ export class UserService {
       errMsg = error.message ? error.message : error.toString();
     }
     return Observable.throw(errMsg);
-  }
-  isAuthenticated() {
-    return this.isLogin;
-  }
-  auth() {
-    var url = this.url + '/auth/github';
-    var authUrl = url + '?url=' + encodeURIComponent(location.href);
-    window.location.href = authUrl;
-  }
-  get() {
-    return this.user;
-  }
-
-  addFriend(email) {
-    let options = new RequestOptions({
-      withCredentials: true
-    });
-    return this.http.post(this.url + '/friend/add', {
-        email: email
-      }, options)
-      .toPromise()
-      .catch(this.onError);
   }
 }

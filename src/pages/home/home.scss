@@ -1,17 +1,17 @@
 page-home {
-
-}
-
-ion-title {
-  position: relative;
-}
-
-.tools {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  ion-icon {
-    padding: 10px;
-    font-size: 20px;
-  }
+    ion-title {
+        position: relative;
+    }
+    .tools {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        ion-icon {
+            padding: 10px;
+            font-size: 20px;
+        }
+    }
+    .chatboxes {
+        margin: -1px 0 0 0;
+    }
 }

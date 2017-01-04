@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserService } from './service'
-import { LoadingController } from 'ionic-angular';
+import { GitHubService } from '../../lib/github'
+import { ProgressService } from '../../lib/ui/progresses'
 
 
 /*
@@ -21,80 +21,51 @@ export class UserSearchPage {
   private q
   private current
   private users
-  private json
-  private userService
-  private loading
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, navParams: NavParams, userService: UserService) {
-    this.user = navParams.get('user') || userService.get();
-    console.log(this.user);
-    this.userService = userService;
+  public searched: Boolean = false
+  constructor(public progress: ProgressService,
+    public navCtrl: NavController,
+    navParams: NavParams,
+    public githubService: GitHubService
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('Hello UserPage Page');
   }
   onUsers(users) {
-    console.log('inside on Users');
-    console.log(users);
-    this.json = users;
     this.users = users.items;
     clearTimeout(this.timer);
     this.timer = null;
-    console.log('inside search again');
-    console.log(this.q, this.current);
-    console.log(this.users);
-    this.stopProgress();
-
+    this.progress.stop();
+    this.searched = true;
     if (this.q !== this.current) {
-      this.showProgress('正在搜索[' + this.q + ']')
+      this.progress.show('正在搜索[' + this.q + ']')
       this.search();
     }
   }
 
-  showProgress(message) {
-    if (this.loading) {
-      this.loading.dismiss();
-    }
-    this.loading = this.loadingCtrl.create({
-      content: message,
-    });
-    this.loading.present();
-  }
-  stopProgress() {
-    if (this.loading) {
-      this.loading.dismiss();
-    }
-    this.loading = null;
-  }
-
   startSearch() {
     this.timer = setTimeout((function () {
-      this.showProgress('正在搜索[' + this.q + ']')
+      this.progress.show('正在搜索[' + this.q + ']')
       this.search()
-    }).bind(this), 1000);
+    }).bind(this), 2000);
   }
 
   search() {
-    console.log('inside search');
-    console.log(this.userService);
-    console.log(this.userService.search);
     this.current = this.q;
-    this.userService.search(this.q).then(this.onUsers.bind(this));
+    let observable = this.githubService.search(this.q);
+    let self = this;
+    observable.subscribe(function (json) {
+      self.onUsers(json);
+    })
   }
 
   getItems(e) {
     this.q = e.target.value.trim();
-    // console.log(e);
-    console.log(e.target.value);
     if (this.timer) {
       console.log('return');
       return;
     }
     this.startSearch();
-  }
-
-  addUser(user) {
-    console.log(user);
-    this.userService.addFriend(user.email);
   }
 }

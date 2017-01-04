@@ -3,16 +3,16 @@
     <ion-title>xiv.im
       <div class="tools">
         <!--<ion-icon name="search"></ion-icon>-->
-        <ion-icon name="add" (click)="gotoAddPage()"></ion-icon>
+        <ion-icon name="add-circle" color="energized" (click)="gotoAddPage()"></ion-icon>
       </div>
     </ion-title>
   </ion-navbar>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="icons" color="primarily">
-      <ion-segment-button value="chatboxes">
+    <ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
+      <ion-segment-button value="dialogs">
         <ion-icon name="chatboxes"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="people">
+      <ion-segment-button value="friends">
         <ion-icon name="people"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -20,11 +20,51 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs, update any existing page or create new pages.
-  </p>
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'dialogs'">
+      <ion-list class="chatboxes">
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="https://avatars.githubusercontent.com/u/131776?v=3">
+          </ion-avatar>
+          <h2>Mr. Potato Head</h2>
+          <p>You're not turning me into a Mashed Potato.</p>
+          <ion-note item-right>5:47 am</ion-note>
+        </ion-item>
+      </ion-list>
+      <ion-list class="chatboxes">
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="https://avatars.githubusercontent.com/u/131776?v=3">
+          </ion-avatar>
+          <h2>Mr. Potato Head</h2>
+          <p>You're not turning me into a Mashed Potato.</p>
+          <ion-note item-right>5:47 am</ion-note>
+        </ion-item>
+
+      </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'friends'">
+      <friend-item [friends]=friends *ngIf="initialized && friends && friends.length">
+      </friend-item>
+      <ion-card *ngIf="initialized && (!friends || !friends.length)">
+
+        <ion-card-header>
+          你还没有添加好友哦！
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>马上添加好友？</p>
+          <button ion-button color="danger" (click)="gotoAddPage()">
+        <ion-icon name="remove-circle"></ion-icon>
+        添加
+      </button>
+
+        </ion-card-content>
+
+      </ion-card>
+    </div>
+  </div>
+
 </ion-content>

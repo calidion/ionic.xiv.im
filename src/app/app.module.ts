@@ -12,8 +12,15 @@ import { UserSearchPage } from '../pages/user/search';
 import { UserPasswordResetPage } from '../pages/user/password/reset';
 import { UserItemGitHubPage } from '../pages/user/github/item';
 import { GroupPage } from '../pages/group/group';
+import { FriendItemPage } from '../pages/friend/item/item';
 
-import { UserService } from '../pages/user/service';
+import { UserService } from '../lib/user';
+import { GitHubService } from '../lib/github';
+import { ProgressService } from '../lib/ui/progresses';
+import { AlertService } from '../lib/ui/alerts';
+import { ChatService } from '../lib/chat';
+// import { MessageService } from '../lib/message';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +34,8 @@ import { UserService } from '../pages/user/service';
     UserPasswordResetPage,
     UserSearchPage,
     UserItemGitHubPage,
-    GroupPage
+    GroupPage,
+    FriendItemPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -44,8 +52,17 @@ import { UserService } from '../pages/user/service';
     UserPasswordResetPage,
     UserSearchPage,
     UserItemGitHubPage,
-    GroupPage
+    GroupPage,
+    FriendItemPage
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, UserService]
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: IonicErrorHandler
+    },
+    UserService, GitHubService,
+    ProgressService, AlertService,
+    ChatService
+  ]
 })
 export class AppModule { }

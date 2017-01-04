@@ -1,0 +1,13 @@
+friend-item {
+    .img-loaded+ion-spinner {
+        display: none;
+    }
+    ion-thumbnail {
+        position: relative;
+        ion-spinner.abs {
+            display: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}

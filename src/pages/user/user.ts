@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserService } from './service'
+import { UserService } from '../../lib/user'
 import { UserDetailsPage } from './details'
 import { UserPasswordResetPage } from './password/reset';
 import { AboutPage } from '../about/about';
@@ -20,7 +20,11 @@ import { AboutPage } from '../about/about';
 export class UserPage {
   user: JSON
   constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
-    this.user = navParams.get('user') || userService.get();
+    this.user = navParams.get('user') 
+    
+    if (!this.user) {
+      this.user = userService.get();
+    }
     console.log(this.user);
   }
 

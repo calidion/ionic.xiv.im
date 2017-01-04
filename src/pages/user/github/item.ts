@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { UserService } from '../service'
-import { LoadingController } from 'ionic-angular';
-import { Response } from '@angular/http';
+import { NavController, AlertController } from 'ionic-angular';
+// import { UserService } from '../../../lib/github'
+import { GitHubService } from '../../../lib/github'
+import { UserService } from '../../../lib/user'
+import { ProgressService } from '../../../lib/ui/progresses'
+import { AlertService } from '../../../lib/ui/alerts'
+
+
 
 /*
   Generated class for the User page.
@@ -20,42 +24,52 @@ export class UserItemGitHubPage {
   user
   data
   loading
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public userService: UserService) {
+  constructor(
+    public progress: ProgressService,
+    public alert: AlertService,
+    public navCtrl: NavController,
+    public userService: UserService,
+    public githubService: GitHubService) {
   }
   ngOnInit() {
     console.log(this.data);
-    this.userService.getUser(this.data.login).then(this.onUser.bind(this));
+    let observable = this.githubService.getUser(this.data.login);
+    let self = this;
+    observable.subscribe((json) => {
+      console.log(json);
+      self.user = json;
+    });
   }
   onUser(user) {
     this.user = user;
     console.log(user);
   }
-  showProgress(message) {
-    if (this.loading) {
-      this.loading.dismiss();
+
+  onAddUser(json) {
+    console.log(json);
+    let title = json.message ? json.message : '未知错误';
+    if (json.code === 0) {
+      title = '你的好友请求已经发送，请等待确认！'
     }
-    this.loading = this.loadingCtrl.create({
-      content: message,
-    });
-    this.loading.present();
-  }
-  stopProgress() {
-    if (this.loading) {
-      this.loading.dismiss();
+    if (json.code === 'FriendExists') {
+      title = '用户已经是你的好友！'
     }
-    this.loading = null;
+    this.progress.stop();
+    this.alert.showAlert('通知', title);
+    this.navCtrl.pop();
   }
   addUser(user) {
+    console.log('add user');
+    console.log(user);
     if (user.email) {
-      this.showProgress('正在添加【' + user.name + '好友');
-      this.userService.addFriend(user.email).then(function (res: Response) {
-        let data = res.json();
-        if (data.code === 0) {
-
-        }
-      });
-
+      this.progress.show('正在添加[' + user.name + ']好友');
+      var obs = this.userService.addFriend(user.email);
+      obs.subscribe(this.onAddUser.bind(this));
+    } else {
+      this.progress.show('当前用户没有邮件信息，无法邀请');
+      setTimeout((function () {
+        this.progress.stop();
+      }).bind(this), 1000);
     }
   }
-
 }

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { GroupPage } from '../group/group';
 import { ContactPage } from '../contact/contact';
 import { UserPage } from '../user/user';
-import { UserService } from '../user/service'
+import { UserService } from '../../lib/user'
+import { ProgressService } from '../../lib/ui/progresses'
+
 
 @Component({
   templateUrl: 'tabs.html'
@@ -18,18 +20,19 @@ export class TabsPage {
   article: any = ContactPage;
   user: any = UserPage;
 
-  constructor(us: UserService, navController: NavController, lc: LoadingController) {
-    let loading = lc.create({
-      content: '正在请求用户信息...'
-    });
-    loading.present();
-    us.getProfile().then(function (data) {
-      loading.dismiss();
-      console.log(typeof data);
-      if (data['code'] !== 0) {
-        us.auth();
+  constructor(
+    userSerivce: UserService,
+    navController: NavController,
+    progress: ProgressService) {
+    progress.show('正在请求用户信息...');
+    let observable = userSerivce.profile();
+    observable.subscribe((json) => {
+      if (json['code'] !== 0) {
+        userSerivce.auth();
+      } else {
+        userSerivce.set(json.data);
+        progress.stop();
       }
-      console.log(data);
     });
   }
 }
