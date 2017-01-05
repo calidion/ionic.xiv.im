@@ -3,6 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 import { UserService } from '../../lib/user';
 import { ChatService } from '../../lib/chat';
 import { UserSearchPage } from '../user/search';
+import { ProgressService } from '../../lib/ui/progresses'
 
 
 @Component({
@@ -16,7 +17,9 @@ export class HomePage {
   initialized
   constructor(public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public userService: UserService) {
+    public userService: UserService,
+    public progressService: ProgressService
+  ) {
     this.type = 'dialogs';
     this.initialized = false;
   }
@@ -40,6 +43,7 @@ export class HomePage {
     } else {
 
     }
+    this.progressService.stop();
     this.initialized = true;
   }
 
@@ -47,11 +51,15 @@ export class HomePage {
     console.log('inside get friends');
     if (!this.friends) {
       var observable = this.userService.getFriends();
+      this.progressService.show('正在获取好友信息...');
       observable.subscribe(this.onFriends.bind(this));
     }
   }
   getDialogs() {
-
+    this.progressService.show('正在获取聊天信息...');
+    setTimeout(function () {
+      this.progressService.stop();
+    }.bind(this), 1000);
   }
 
   gotoAddPage() {

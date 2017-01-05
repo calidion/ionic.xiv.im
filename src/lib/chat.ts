@@ -24,8 +24,11 @@ export class ChatService {
   }
 
   addUser(user) {
-    var users = this.getUsers();
-    users.push(user);
-    localStorage.setItem(this.key, JSON.stringify(user));
+    var users = this.getUsers() || [];
+    users = users.filter(function(item) {
+      return item.id !== user.id
+    });
+    users.unshift(user);
+    localStorage.setItem(this.key, JSON.stringify(users));
   }
 }

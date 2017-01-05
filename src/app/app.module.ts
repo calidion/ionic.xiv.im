@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+
+// Pages
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -13,7 +15,11 @@ import { UserPasswordResetPage } from '../pages/user/password/reset';
 import { UserItemGitHubPage } from '../pages/user/github/item';
 import { GroupPage } from '../pages/group/group';
 import { FriendItemPage } from '../pages/friend/item/item';
+import { ChatPage } from '../pages/chat/chat';
+import { ChatBarPage } from '../pages/chat-bar/chat-bar';
 
+
+// Services
 import { UserService } from '../lib/user';
 import { GitHubService } from '../lib/github';
 import { ProgressService } from '../lib/ui/progresses';
@@ -35,7 +41,9 @@ import { ChatService } from '../lib/chat';
     UserSearchPage,
     UserItemGitHubPage,
     GroupPage,
-    FriendItemPage
+    FriendItemPage,
+    ChatPage,
+    ChatBarPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -53,7 +61,9 @@ import { ChatService } from '../lib/chat';
     UserSearchPage,
     UserItemGitHubPage,
     GroupPage,
-    FriendItemPage
+    FriendItemPage,
+    ChatPage,
+    ChatBarPage
   ],
   providers: [
     {

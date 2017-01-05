@@ -1,0 +1,79 @@
+<!--
+  Generated template for the Chat page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{user.friend.username}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="time">
+    <p>2017年1月1号 早上08:30:32 </p>
+  </div>
+  <div class="from">
+    <div class="avater">
+      <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
+    </div>
+    <div class="message">
+      <div class="sender">
+        usernameid
+      </div>
+      <div class="document">
+        <pre>
+代码：
+```js
+var a = 1;
+```
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="to">
+    <div class="message">
+      <div class="sender">
+        usernameid
+      </div>
+      <div class="document">
+        <pre>
+代码：
+```js
+var a = 1;var a = 1;var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+var a = 1;
+
+```
+        </pre>
+      </div>
+    </div>
+    <div class="avater">
+      <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
+    </div>
+  </div>
+
+</ion-content>
+<ion-toolbar>
+  <div class="input">
+    <!--<ion-input (input)="getInput($event)">
+    </ion-input>-->
+    <textarea placeholder="支持Markdown的聊天软件" (input)="getInput($event)"></textarea>
+  </div>
+  <div class="send">
+    <button ion-button [disabled]="!message" color="primary">发送</button>
+  </div>
+</ion-toolbar>

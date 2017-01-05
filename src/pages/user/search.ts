@@ -22,7 +22,8 @@ export class UserSearchPage {
   private current
   private users
   public searched: Boolean = false
-  constructor(public progress: ProgressService,
+  constructor(
+    public progress: ProgressService,
     public navCtrl: NavController,
     navParams: NavParams,
     public githubService: GitHubService

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { UserService } from '../../../lib/user'
+import { ChatService } from '../../../lib/chat'
 import { AlertService } from '../../../lib/ui/alerts'
+import { ChatPage } from '../../chat/chat';
 
 
 /*
@@ -22,6 +24,7 @@ export class FriendItemPage {
   constructor(
     public navCtrl: NavController,
     public alertService: AlertService,
+    public chatService: ChatService,
     public userService: UserService) {
     console.log(this.friends);
   }
@@ -43,9 +46,16 @@ export class FriendItemPage {
       '确定删除好友[' + user.friend.nickname + ']?',
       '你的好友[' + user.friend.nickname + ']将会被永久删除，你确定需要继续？',
       function () {
-      console.log(user.friend);
-      var observable = self.userService.removeFriend(user.friend.id);
-      observable.subscribe(self.onRemove.bind(self));
+        console.log(user.friend);
+        var observable = self.userService.removeFriend(user.friend.id);
+        observable.subscribe(self.onRemove.bind(self));
+      });
+  }
+  chat(user) {
+    console.log(user);
+    this.chatService.addUser(user.friend);
+    this.navCtrl.push(ChatPage, {
+      user: user
     });
   }
 }
