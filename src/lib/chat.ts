@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestMethod, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
@@ -12,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
 
 export class ChatService {
   key = 'user'
-  private url: string = 'http://forum.webfullstack.me'
+  // private url: string = 'http://forum.webfullstack.me'
   constructor(private http: Http) {
 
   }

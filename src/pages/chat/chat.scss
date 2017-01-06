@@ -1,4 +1,16 @@
 page-chat {
+    // @import "themes/vs";
+    // @import "themes/default";
+    // @import "themes/prism";
+    // @import "themes/prism-coy";
+    // @import "themes/prism-atom-dark";
+    // @import "themes/prism-dark";
+    // @import "themes/prism-funky";
+    // @import "themes/prism-okaidia";
+    @import "themes/prism-ghcolors";
+    // @import "themes/prism-solarizedlight";
+    // @import "themes/prism-tomorrow";
+    // @import "themes/prism-twilight";
     ion-footer {
         position: fixed;
         height: 50px;
@@ -47,6 +59,7 @@ page-chat {
                     pre {
                         margin: 0px;
                         width: 100%;
+                        border-radius: 10px;
                     }
                 }
             }
