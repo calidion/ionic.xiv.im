@@ -12,23 +12,45 @@ import 'rxjs/add/operator/toPromise';
 
 export class ChatService {
   key = 'user'
+  message = 'message'
   // private url: string = 'http://forum.webfullstack.me'
   constructor(private http: Http) {
 
   }
   getUsers() {
-    return JSON.parse(localStorage.getItem('users'));
+    return JSON.parse(localStorage.getItem(this.key));
   }
   recent() {
-
+    return this.getUsers();
   }
 
-  addUser(user) {
+  addUser(user, message) {
     var users = this.getUsers() || [];
-    users = users.filter(function(item) {
-      return item.id !== user.id
+    users = users.filter(function (item) {
+      return item.friend.email !== user.friend.email
     });
+    user.time = new Date();
+    user.message = message;
     users.unshift(user);
     localStorage.setItem(this.key, JSON.stringify(users));
+  }
+
+  getMessages(user) {
+    var key = this.message + '_' + user.friend.email;
+    var messages = localStorage.getItem(key) || '[]';
+    return JSON.parse(messages);
+  }
+
+  addMessage(user, text) {
+    var messages = this.getMessages(user) || [];
+    user.time = new Date();
+    user.text = text;
+    messages.push(user);
+    localStorage.setItem(this.message + '_' + user.friend.email, JSON.stringify(messages));
+    return messages;
+  }
+
+  removeMessage(user, message) {
+
   }
 }

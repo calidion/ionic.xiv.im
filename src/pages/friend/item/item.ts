@@ -53,7 +53,7 @@ export class FriendItemPage {
   }
   chat(user) {
     console.log(user);
-    this.chatService.addUser(user.friend);
+    this.chatService.addUser(user, '');
     this.navCtrl.push(ChatPage, {
       user: user
     });

@@ -14,20 +14,54 @@
 
 
 <ion-content padding>
-
-  <div class="time">
-    <p>2017年1月1号 早上08:30:32 </p>
-  </div>
-  <div class="from">
-    <div class="avater">
-      <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
+  
+  <!--<message-item [user]=user></message-item>-->
+  <div *ngFor="let message of messages">
+  <div [ngSwitch]="message.type">
+    <div class="time" *ngSwitchCase="time">
+      <p>{{message.time}}</p>
     </div>
-    <div class="message">
-      <div class="sender">
-        usernameid
+    <div class="from" *ngSwitchDefault>
+      <div class="avater">
+        <img src="{{message.friend.avatar}}" />
       </div>
-      <div class="document">
-        <pre>
+      <div class="message">
+        <div class="sender">{{message.friend.nickname}}</div>
+        <div class="document">
+          <pre innerHTML="{{message.text}}">
+        </pre>
+        </div>
+      </div>
+    </div>
+    <div class="to" *ngSwitchCase="to">
+      <div class="message">
+        <div class="document">
+          <pre innerHTML="{{message.text}}">
+        </pre>
+        </div>
+      </div>
+      <div class="avater">
+        <img src="{{message.user.avatar}}" />
+      </div>
+    </div>
+  </div>
+</div>
+  <!--<div>
+    <div class="time">
+      <p>2017年1月1号 早上08:30:32 </p>
+    </div>
+  </div>
+  <div>
+    <div class="from">
+      <div class="avater">
+        <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
+      </div>
+      <div class="message">
+        <div class="sender">
+          usernameid
+        </div>
+        <div class="document">
+          <pre>
 代码：
 ```js
 var a = 1;
@@ -35,14 +69,15 @@ var a = 1;
 
 
         </pre>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="to">
-    <div class="message">
-      <div class="document">
-        <pre>
+  <div>
+    <div class="to">
+      <div class="message">
+        <div class="document">
+          <pre>
 代码：
 ```js
 var a = 1;
@@ -51,21 +86,21 @@ function helloworld() {{ '{' }}
 {{ '}' }}
 ```
         </pre>
+        </div>
+      </div>
+      <div class="avater">
+        <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
       </div>
     </div>
-    <div class="avater">
-      <img src="https://avatars.githubusercontent.com/u/131776?v=3" />
-    </div>
-  </div>
-
+  </div>-->
 </ion-content>
 <ion-toolbar>
   <div class="input">
     <!--<ion-input (input)="getInput($event)">
     </ion-input>-->
-    <textarea placeholder="支持Markdown的聊天软件" (input)="getInput($event)"></textarea>
+    <textarea [(ngModel)]="message" placeholder="支持Markdown的聊天软件"></textarea>
   </div>
   <div class="send">
-    <button ion-button [disabled]="!message" color="primary">发送</button>
+    <button ion-button [disabled]="!message" color="primary" (click)="send()">发送</button>
   </div>
 </ion-toolbar>

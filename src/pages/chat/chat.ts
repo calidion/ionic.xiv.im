@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, ViewController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ViewController, NavParams, Content } from 'ionic-angular';
 import * as markdown from 'showdown';
 import * as prism from 'prismjs';
+import { ChatService } from '../../lib/chat'
+
 
 let converter = new markdown.Converter();
 /*
@@ -14,39 +16,35 @@ let converter = new markdown.Converter();
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
-  styleUrls: [
-    'assets/themes/prism.css',
-    'assets/themes/prism-coy.css',
-    'assets/themes/prism-dark.css',
-    'assets/themes/prism-funky.css',
-    'assets/themes/prism-okaidia.css',
-    'assets/themes/prism-solarizedlight.css',
-    'assets/themes/prism-tomorrow.css',
-    'assets/themes/prism-twilight.css'
-  ]
+  queries: {
+    content: new ViewChild(Content)
+  }
 })
 
 
 export class ChatPage {
+  @ViewChild(Content) content: Content;
+
   user
   message
+  messages = []
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
+    public chatService: ChatService,
     public navParams: NavParams) {
     this.user = navParams.get('user');
-    console.log(prism);
-
-
     // hide tabs when view loads
     this.viewCtrl.didEnter.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'none');
-      this.update('.document > pre');
+      this.messages = this.chatService.getMessages(this.user);
+      this.updateMessage();
     });
 
     // show tabs when view exits
     this.viewCtrl.willLeave.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'flex');
     });
+
 
   }
   setCSS(selector, key, value) {
@@ -58,30 +56,31 @@ export class ChatPage {
     } // end if
   }
 
-  update(selector) {
-    let domElement = document.querySelectorAll(selector);
-    if (domElement !== null) {
-      Object.keys(domElement).map((k) => {
-        domElement[k].innerHTML = converter.makeHtml(domElement[k].innerHTML);
-        console.log(domElement[k].innerHTML);
-        // domElement[k].style[key] = value;
-      });
-    } // end if
-    prism.highlightAll(function (data) {
-      console.log(data);
+  updateMessage() {
+    this.messages = this.messages.map(function (item) {
+      item.text = converter.makeHtml(item.text);
+      // console.log(item);
+      return item;
     });
+    setTimeout(function () {
+      prism.highlightAll('', function (data) {
+        console.log('prism renderred');
+        console.log(data);
+      });
+      this.content.scrollToBottom();
+
+    }.bind(this), 1000);
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
-    console.log(this.user);
-  }
-  getInput(e) {
-    this.message = e.target.value.trim();
+
   }
 
   send() {
-
+    this.messages = this.chatService.addMessage(this.user, this.message);
+    this.updateMessage();
+    this.message = '';
   }
 }
 

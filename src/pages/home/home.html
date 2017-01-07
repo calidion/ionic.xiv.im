@@ -22,33 +22,39 @@
 <ion-content padding>
   <div [ngSwitch]="type">
     <div *ngSwitchCase="'dialogs'">
-      <ion-list class="chatboxes">
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="https://avatars.githubusercontent.com/u/131776?v=3">
-          </ion-avatar>
-          <h2>Mr. Potato Head</h2>
-          <p>You're not turning me into a Mashed Potato.</p>
-          <ion-note item-right>5:47 am</ion-note>
-        </ion-item>
-      </ion-list>
-      <ion-list class="chatboxes">
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="https://avatars.githubusercontent.com/u/131776?v=3">
-          </ion-avatar>
-          <h2>Mr. Potato Head</h2>
-          <p>You're not turning me into a Mashed Potato.</p>
-          <ion-note item-right>5:47 am</ion-note>
-        </ion-item>
+      <ion-card *ngIf="initialized && (!users || !users.length)">
 
-      </ion-list>
+        <ion-card-header>
+          最近你还没有跟好友聊天哦！
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>马上找好友聊天？</p>
+          <button ion-button color="success" (click)="getFriends()">
+        <ion-icon name="chatbubbles" color="bright"></ion-icon>&nbsp;聊天
+      </button>
+
+        </ion-card-content>
+
+      </ion-card>
+      <div *ngIf="initialized && (users && users.length)">
+        <ion-list class="chatboxes" *ngFor="let user of users">
+          <ion-item (click)="chat(user)">
+            <ion-avatar item-left>
+              <img src="{{user.friend.avatar}}">
+            </ion-avatar>
+            <h2>{{user.friend.nickname}}</h2>
+            <p>{{user.message || '暂无聊天记录'}}</p>
+            <ion-note item-right>{{user.message && user.message.time ? user.message.time : ''}}</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
 
     <div *ngSwitchCase="'friends'">
-      <friend-item [friends]=friends *ngIf="initialized && friends && friends.length">
+      <friend-item [friends]=friends *ngIf="selected && friends && friends.length">
       </friend-item>
-      <ion-card *ngIf="initialized && (!friends || !friends.length)">
+      <ion-card *ngIf="selected && (!friends || !friends.length)">
 
         <ion-card-header>
           你还没有添加好友哦！

@@ -4,6 +4,7 @@ import { UserService } from '../../lib/user';
 import { ChatService } from '../../lib/chat';
 import { UserSearchPage } from '../user/search';
 import { ProgressService } from '../../lib/ui/progresses'
+import { ChatPage } from '../chat/chat';
 
 
 @Component({
@@ -14,14 +15,22 @@ import { ProgressService } from '../../lib/ui/progresses'
 export class HomePage {
   public type
   public friends
+  users
   initialized
+  selected
   constructor(public navCtrl: NavController,
     private toastCtrl: ToastController,
     public userService: UserService,
-    public progressService: ProgressService
+    public progressService: ProgressService,
+    public chatService: ChatService
   ) {
     this.type = 'dialogs';
-    this.initialized = false;
+    this.initialized = true;
+    this.selected = false;
+  }
+  ionViewDidLoad() {
+    console.log('on view load');
+    this.getDialogs()
   }
   onChange(e) {
     console.log(e);
@@ -44,7 +53,7 @@ export class HomePage {
 
     }
     this.progressService.stop();
-    this.initialized = true;
+    this.selected = true;
   }
 
   getFriends() {
@@ -57,12 +66,20 @@ export class HomePage {
   }
   getDialogs() {
     this.progressService.show('正在获取聊天信息...');
-    setTimeout(function () {
-      this.progressService.stop();
-    }.bind(this), 1000);
+    this.users = this.chatService.recent();
+    console.log(this.users);
+    this.progressService.stop();
   }
 
   gotoAddPage() {
     this.navCtrl.push(UserSearchPage);
+  }
+
+  chat(user) {
+    console.log(user);
+    this.chatService.addUser(user, '');
+    this.navCtrl.push(ChatPage, {
+      user: user
+    });
   }
 }
