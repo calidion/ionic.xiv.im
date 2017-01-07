@@ -3,7 +3,8 @@ import { NavController, ViewController, NavParams, Content } from 'ionic-angular
 import * as markdown from 'showdown';
 import * as prism from 'prismjs';
 import { ChatService } from '../../lib/chat'
-
+import * as moment from 'moment'
+moment.locale('zh-CN');
 
 let converter = new markdown.Converter();
 /*
@@ -59,6 +60,7 @@ export class ChatPage {
   updateMessage() {
     this.messages = this.messages.map(function (item) {
       item.text = converter.makeHtml(item.text);
+      item.time = moment(item.time).format('LL[ ]LT');
       // console.log(item);
       return item;
     });

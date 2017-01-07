@@ -21,7 +21,7 @@
     <div class="time" *ngSwitchCase="time">
       <p>{{message.time}}</p>
     </div>
-    <div class="from" *ngSwitchDefault>
+    <div class="from" *ngSwitchCase="from" >
       <div class="avater">
         <img src="{{message.friend.avatar}}" />
       </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="to" *ngSwitchCase="to">
+    <div class="to" *ngSwitchDefault>
       <div class="message">
         <div class="document">
           <pre innerHTML="{{message.text}}">

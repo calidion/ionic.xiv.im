@@ -61,15 +61,60 @@ page-chat {
                         margin: 0px;
                         width: 100%;
                         border-radius: 10px;
+                        p {
+                            margin: 0px;
+                        }
                     }
+                }
+            }
+        }
+        .from {
+            .message {
+                .document {
+                    position: relative;
+                    display: inline-block;
+                    margin-left: 10px;
+                }
+                .document:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    width: 0;
+                    height: 0;
+                    left: -10px;
+                    border-top: 5px solid transparent;
+                    border-right: 10px solid #f8f8f8;
+                    border-bottom: 5px solid transparent;
+                    top: 8px;
                 }
             }
         }
         .to {
             .message {
+                text-align: right;
                 .document {
+                    position: relative;
                     background-color: #6088ca;
                     color: #FFF;
+                    text-align: right;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                .document:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    width: 0;
+                    height: 0;
+                    right: -10px;
+                    border-top: 5px solid transparent;
+                    border-left: 10px solid #6088ca;
+                    border-bottom: 5px solid transparent;
+                    top: 8px;
                 }
             }
         }
