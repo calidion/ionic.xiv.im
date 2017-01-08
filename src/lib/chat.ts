@@ -41,11 +41,11 @@ export class ChatService {
     return JSON.parse(messages);
   }
 
-  addMessage(user, text) {
+  addMessage(user, text, type) {
     var messages = this.getMessages(user) || [];
     user.time = new Date();
     user.text = text;
-    user.type = 'from';
+    user.type = type || 'from';
     messages.push(user);
     localStorage.setItem(this.message + '_' + user.friend.email, JSON.stringify(messages));
     return messages;

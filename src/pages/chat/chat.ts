@@ -80,7 +80,7 @@ export class ChatPage {
   }
 
   send() {
-    this.messages = this.chatService.addMessage(this.user, this.message);
+    this.messages = this.chatService.addMessage(this.user, this.message, 'from');
     this.updateMessage();
     this.message = '';
   }
