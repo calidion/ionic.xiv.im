@@ -47,7 +47,9 @@ import { ChatService } from '../lib/chat';
     MessageItemPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      mode: 'ios'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -23,10 +23,10 @@
     </div>
     <div class="from" *ngSwitchCase="from" >
       <div class="avater">
-        <img src="{{message.friend.avatar}}" />
+        <img src="{{message.sender.avatar}}" />
       </div>
       <div class="message">
-        <div class="sender">{{message.friend.nickname}}</div>
+        <div class="sender">{{message.sender.nickname}}</div>
         <div class="document">
           <pre innerHTML="{{message.text}}">
         </pre>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="avater">
-        <img src="{{message.user.avatar}}" />
+        <img src="{{message.sender.avatar}}" />
       </div>
     </div>
   </div>

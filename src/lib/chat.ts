@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-// import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+// import * as io from 'socket.io-client';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/toPromise';
+import { Request } from './request';
 
 @Injectable()
 
-export class ChatService {
+export class ChatService extends Request {
   key = 'user'
   message = 'message'
+  socket
   // private url: string = 'http://forum.webfullstack.me'
-  constructor(private http: Http) {
-
+  constructor(protected http: Http) {
+    super(http);
+    // this.initSocketIO();
   }
+
+  // initSocketIO() {
+  //   this.socket = io(this.url);
+  //   this.socket.on('message', function (data) {
+  //     console.log('inside socket.io message');
+  //     console.log(data);
+  //   });
+  // }
+
   getUsers() {
     return JSON.parse(localStorage.getItem(this.key));
   }
@@ -40,13 +48,20 @@ export class ChatService {
     var messages = localStorage.getItem(key) || '[]';
     return JSON.parse(messages);
   }
+  sendMessage(to, text) {
+    return this._post('/message/new', {
+      to: to,
+      text: text,
+      time: new Date()
+    })
+  }
 
-  addMessage(user, text, type) {
+  addMessage(user, message) {
     var messages = this.getMessages(user) || [];
-    user.time = new Date();
-    user.text = text;
-    user.type = type || 'from';
-    messages.push(user);
+    messages = messages.filter(function(item) {
+      return item.id !== message.id;
+    });
+    messages.push(message);
     localStorage.setItem(this.message + '_' + user.friend.email, JSON.stringify(messages));
     return messages;
   }

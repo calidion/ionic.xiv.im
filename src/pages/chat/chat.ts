@@ -58,6 +58,7 @@ export class ChatPage {
   }
 
   updateMessage() {
+    console.log(this.messages.length);
     this.messages = this.messages.map(function (item) {
       item.text = converter.makeHtml(item.text);
       item.time = moment(item.time).format('LL[ ]LT');
@@ -66,8 +67,8 @@ export class ChatPage {
     });
     setTimeout(function () {
       prism.highlightAll('', function (data) {
-        console.log('prism renderred');
-        console.log(data);
+        // console.log('prism renderred');
+        // console.log(data);
       });
       this.content.scrollToBottom();
 
@@ -76,13 +77,29 @@ export class ChatPage {
   }
 
   ionViewDidLoad() {
-
+    this.chatService.subscribeMessage(function (message) {
+      console.log('chat get message');
+      console.log(message);
+      console.log(this.user);
+      if (message.receiver.id === this.user.friend.id) {
+        message.type = 'to';
+      } else if (message.sender.id === this.user.friend.id) {
+        message.type = 'from';
+      } else {
+        return;
+      }
+      this.messages = this.chatService.addMessage(this.user, message);
+      this.updateMessage();
+    }.bind(this));
   }
 
   send() {
-    this.messages = this.chatService.addMessage(this.user, this.message, 'from');
-    this.updateMessage();
+    var observable = this.chatService.sendMessage(this.user.friend.id, this.message);
     this.message = '';
+    observable.subscribe((json) => {
+      // this.messages = this.chatService.addMessage(this.user, this.message, 'from');
+      // this.updateMessage();
+    });
   }
 }
 
