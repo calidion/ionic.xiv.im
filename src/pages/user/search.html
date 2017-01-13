@@ -11,17 +11,21 @@
   </ion-navbar>
   <ion-toolbar>
     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button (click)="invite()">添加</button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content class='back'>
+    <p *ngIf="searching" class="text-center">{{seaching}}</p>
+
   <ion-list no-lines *ngIf="users">
     <user-item-github [data]=user *ngFor="let user of users">
     </user-item-github>
   </ion-list>
   <ion-card *ngIf="seached && (!users || !users.length)">
-
     <ion-card-header>
       <ion-icon name="warning" color="danger"></ion-icon>没有搜索到你要找的用户!
     </ion-card-header>

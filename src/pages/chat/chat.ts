@@ -62,7 +62,7 @@ export class ChatPage {
     this.messages = this.messages.map(function (item) {
       item.text = converter.makeHtml(item.text);
       item.time = moment(item.time).format('LL[ ]LT');
-      // console.log(item);
+      console.log(item);
       return item;
     });
     setTimeout(function () {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 // import { UserService } from '../../../lib/github'
 import { GitHubService } from '../../../lib/github'
 import { UserService } from '../../../lib/user'
@@ -62,7 +62,7 @@ export class UserItemGitHubPage {
     console.log('add user');
     console.log(user);
     if (user.email) {
-      this.progress.show('正在添加[' + user.name + ']好友');
+      this.progress.show('正在添加[' + user.name + ']为好友');
       var obs = this.userService.addFriend(user.email);
       obs.subscribe(this.onAddUser.bind(this));
     } else {

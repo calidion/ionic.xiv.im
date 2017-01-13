@@ -17,11 +17,10 @@
   
   <!--<message-item [user]=user></message-item>-->
   <div *ngFor="let message of messages">
-  <div [ngSwitch]="message.type">
-    <div class="time" *ngSwitchCase="time">
+    <div class="time" *ngIf="message.type === 'time'">
       <p>{{message.time}}</p>
     </div>
-    <div class="from" *ngSwitchCase="from" >
+    <div class="from" *ngIf="message.type === 'from'">
       <div class="avater">
         <img src="{{message.sender.avatar}}" />
       </div>
@@ -33,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="to" *ngSwitchDefault>
+    <div class="to" *ngIf="message.type === 'to'">
       <div class="message">
         <div class="document">
           <pre innerHTML="{{message.text}}">
@@ -45,7 +44,6 @@
       </div>
     </div>
   </div>
-</div>
   <!--<div>
     <div class="time">
       <p>2017年1月1号 早上08:30:32 </p>
