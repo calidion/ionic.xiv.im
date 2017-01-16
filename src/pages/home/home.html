@@ -45,7 +45,7 @@
         <ion-list class="chatboxes" *ngFor="let user of users">
           <ion-item (click)="chat(user)">
             <ion-avatar item-left>
-              <img src="{{user.friend.avatar}}">
+              <img src="{{user.friend && user.friend.avatar}}">
             </ion-avatar>
             <h2>{{user.friend.username}}</h2>
             <p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
