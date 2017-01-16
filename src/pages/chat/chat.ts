@@ -70,8 +70,9 @@ export class ChatPage {
         // console.log('prism renderred');
         // console.log(data);
       });
-      this.content.scrollToBottom();
-
+      if (this.content) {
+        this.content.scrollToBottom();
+      }
     }.bind(this), 1000);
 
   }
@@ -88,6 +89,7 @@ export class ChatPage {
       } else {
         return;
       }
+      this.chatService.addUser(this.user, message);
       this.messages = this.chatService.addMessage(this.user, message);
       this.updateMessage();
     }.bind(this));

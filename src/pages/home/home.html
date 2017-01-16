@@ -1,13 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <!--<ion-navbar>
     <ion-title>xiv.im
       <div class="tools">
-        <!--<ion-icon name="search"></ion-icon>-->
         <ion-icon name="add-circle" color="energized" (click)="gotoAddPage()"></ion-icon>
       </div>
     </ion-title>
-  </ion-navbar>
-  <ion-toolbar>
+  </ion-navbar>-->
+  <ion-toolbar >
     <ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
       <ion-segment-button value="dialogs">
         <ion-icon name="chatboxes"></ion-icon>
@@ -16,10 +15,15 @@
         <ion-icon name="people"></ion-icon>
       </ion-segment-button>
     </ion-segment>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="gotoAddPage()">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <div [ngSwitch]="type">
     <div *ngSwitchCase="'dialogs'">
       <ion-card *ngIf="initialized && (!users || !users.length)">
@@ -43,8 +47,8 @@
             <ion-avatar item-left>
               <img src="{{user.friend.avatar}}">
             </ion-avatar>
-            <h2>{{user.friend.nickname}}</h2>
-            <p>{{user.message || '暂无聊天记录'}}</p>
+            <h2>{{user.friend.username}}</h2>
+            <p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
             <ion-note item-right>{{user.message && user.message.time ? user.message.time : ''}}</ion-note>
           </ion-item>
         </ion-list>

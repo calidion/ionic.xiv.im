@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>搜索(github)用户</ion-title>
+    <ion-title>添加好友</ion-title>
   </ion-navbar>
   <ion-toolbar>
     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
@@ -19,7 +19,13 @@
 
 
 <ion-content class='back'>
-    <p *ngIf="searching" class="text-center">{{seaching}}</p>
+  <div class="intro" *ngIf="!users">
+    <p>xiv.im支持通过搜索github帐号添加好友，也支持直接通过电子邮箱添加好友。 </p>
+    <p>如果输入的是邮箱可以直接点击[添加]按扭，即可添加成功。 </p>
+    <p>如果输入的是github帐号，需要被添加用户公开邮箱才可以添加成功。</p>
+  </div>
+
+  <p *ngIf="searching" class="text-center">{{seaching}}</p>
 
   <ion-list no-lines *ngIf="users">
     <user-item-github [data]=user *ngFor="let user of users">

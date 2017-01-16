@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{article.title}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="author">
+    <div class="left">
+      <img src="{{article.author.avatar}}" />
+    </div>
+    <div class="right">
+      <h3>作者：{{article.author.username}}</h3>
+      <ion-note>{{article.time}}</ion-note>
+    </div>
+    <h2>{{article.title}}</h2>
+  </div>
+
+  <div class="article" innerHTML="{{article.text}}">
+  </div>
+</ion-content>

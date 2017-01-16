@@ -81,9 +81,14 @@ export class UserSearchPage {
     this.startSearch();
   }
   invite() {
-    this.progress.show('正在添加[' + this.q + ']为好友');
-    var obs = this.userService.addFriend(this.q);
-    obs.subscribe(this.onAddUser.bind(this));
+    if (this.q) {
+      this.progress.show('正在添加[' + this.q + ']为好友');
+      var obs = this.userService.addFriend(this.q);
+      obs.subscribe(this.onAddUser.bind(this));
+    } else {
+      
+    }
+
   }
   onAddUser(json) {
     console.log(json);

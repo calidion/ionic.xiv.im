@@ -77,6 +77,7 @@ export class HomePage {
 
   chat(user) {
     console.log(user);
+    console.log('inside add chat');
     this.chatService.addUser(user, '');
     this.navCtrl.push(ChatPage, {
       user: user

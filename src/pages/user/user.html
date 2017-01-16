@@ -17,7 +17,7 @@
   <ion-list no-lines class="top black">
     <ion-item (click)="goToDetailsPage()">
       <ion-thumbnail item-left>
-        <ion-img src="{{user.avatar}}"> 
+        <ion-img src="{{user.avatar}}">
         </ion-img>
         <ion-spinner class="abs"></ion-spinner>
       </ion-thumbnail>
@@ -25,30 +25,36 @@
       <p>{{user.signature || '这家伙很懒，什么个性签名都没有留下。'}}</p>
     </ion-item>
   </ion-list>
-  <!--<ion-list no-lines class="top black">
-    <button ion-item (click)="goToPasswordPage()">
-      <ion-icon name="key" item-left></ion-icon>
-      修改密码
-    </button>
-  </ion-list>-->
 
   <ion-list no-lines class="top black">
     <button ion-item (click)="goToSettingsPage()">
-      <ion-icon name="people" item-left></ion-icon>
+      <ion-icon color="secondary" name="contact" item-left></ion-icon>
       我的关注
+    </button>
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="primary"name="contacts" item-left></ion-icon>
+      我的好友
+    </button>
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="primary" name="paper" item-left></ion-icon>
+      我的文章
     </button>
   </ion-list>
 
   <ion-list no-lines class="top black">
     <button ion-item (click)="goToSettingsPage()">
-      <ion-icon name="settings" item-left></ion-icon>
+      <ion-icon color="primary" name="settings" item-left></ion-icon>
       设置
+    </button>
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="danger" name="exit" item-left></ion-icon>
+      退出
     </button>
   </ion-list>
 
   <ion-list no-lines class="top black">
     <button ion-item (click)="goToAboutPage()">
-      <ion-icon name="information-circle-outline" item-left></ion-icon>
+      <ion-icon color="primary" name="information-circle" item-left></ion-icon>
       关于xiv
     </button>
   </ion-list>

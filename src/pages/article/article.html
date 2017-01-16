@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      文章列表
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let article of articles" (click)="read(article)">
+      <ion-avatar item-left>
+        <img src="{{article.author.avatar}}">
+      </ion-avatar>
+      <h2>{{article.title}}</h2>
+      <p>{{article.content}}</p>
+      <ion-note item-right>{{article.updateAt}}</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

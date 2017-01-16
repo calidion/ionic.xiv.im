@@ -34,18 +34,18 @@ page-chat {
         .from,
         .to {
             display: flex;
-            flex: 6;
-            margin: 5px -10px;
+            // margin: 5px -10px;
             .avater {
-                flex: 1;
+                flex: 2 0 20%;
                 text-align: center;
+                margin: 8px 0px 0px 0px;
                 img {
                     width: 42px;
                     height: 42px;
                 }
             }
             .message {
-                flex: 5;
+                flex: 8 0 80%;
                 text-align: left;
                 overflow: auto;
                 .sender {
@@ -53,6 +53,7 @@ page-chat {
                     color: #ccc;
                 }
                 .document {
+                    max-width: 94%;
                     border-radius: 10px;
                     padding: 15px;
                     background-color: #f8f8f8;

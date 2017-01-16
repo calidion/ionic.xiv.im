@@ -11,19 +11,9 @@ export class ChatService extends Request {
   key = 'user'
   message = 'message'
   socket
-  // private url: string = 'http://forum.webfullstack.me'
   constructor(protected http: Http) {
     super(http);
-    // this.initSocketIO();
   }
-
-  // initSocketIO() {
-  //   this.socket = io(this.url);
-  //   this.socket.on('message', function (data) {
-  //     console.log('inside socket.io message');
-  //     console.log(data);
-  //   });
-  // }
 
   getUsers() {
     return JSON.parse(localStorage.getItem(this.key));

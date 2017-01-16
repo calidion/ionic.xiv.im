@@ -5,7 +5,8 @@ import { MyApp } from './app.component';
 
 // Pages
 import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { ArticlePage } from '../pages/article/article';
+import { ArticleDetailPage } from '../pages/article/detail/detail';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { UserPage } from '../pages/user/user';
@@ -17,7 +18,6 @@ import { GroupPage } from '../pages/group/group';
 import { FriendItemPage } from '../pages/friend/item/item';
 import { ChatPage } from '../pages/chat/chat';
 import { MessageItemPage } from '../pages/chat/message/message';
-// import { ChatBarPage } from '../pages/chat-bar/chat-bar';
 
 
 // Services
@@ -26,14 +26,14 @@ import { GitHubService } from '../lib/github';
 import { ProgressService } from '../lib/ui/progresses';
 import { AlertService } from '../lib/ui/alerts';
 import { ChatService } from '../lib/chat';
-// import { MessageService } from '../lib/message';
+import { ArticleService } from '../lib/article';
 
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
+    ArticlePage,
     HomePage,
     UserPage,
     TabsPage,
@@ -44,7 +44,8 @@ import { ChatService } from '../lib/chat';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    MessageItemPage
+    MessageItemPage,
+    ArticleDetailPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -55,7 +56,7 @@ import { ChatService } from '../lib/chat';
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
+    ArticlePage,
     HomePage,
     UserPage,
     TabsPage,
@@ -66,7 +67,8 @@ import { ChatService } from '../lib/chat';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    MessageItemPage
+    MessageItemPage,
+    ArticleDetailPage
   ],
   providers: [
     {
@@ -75,7 +77,7 @@ import { ChatService } from '../lib/chat';
     },
     UserService, GitHubService,
     ProgressService, AlertService,
-    ChatService
+    ChatService, ArticleService
   ]
 })
 export class AppModule { }

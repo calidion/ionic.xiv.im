@@ -6,6 +6,7 @@
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
+    "minify": "ionic-app-scripts minify",
     "test": "ng test --code-coverage"
   },
   "dependencies": {

@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { GroupPage } from '../group/group';
-import { ContactPage } from '../contact/contact';
+import { ArticlePage } from '../article/article';
 import { UserPage } from '../user/user';
 import { UserService } from '../../lib/user'
 import { ProgressService } from '../../lib/ui/progresses'
@@ -17,7 +17,7 @@ export class TabsPage {
   // should be each tab's root Page
   chat: any = HomePage;
   group: any = GroupPage;
-  article: any = ContactPage;
+  article: any = ArticlePage;
   user: any = UserPage;
 
   constructor(
