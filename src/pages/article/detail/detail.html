@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="author">
+  <div class="author" *ngIf="article">
     <div class="left">
       <img src="{{article.author.avatar}}" />
     </div>

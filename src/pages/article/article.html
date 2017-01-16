@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="articles">
     <ion-item *ngFor="let article of articles" (click)="read(article)">
       <ion-avatar item-left>
         <img src="{{article.author.avatar}}">
