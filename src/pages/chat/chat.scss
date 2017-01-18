@@ -19,6 +19,13 @@ page-chat {
         bottom: 0px;
     }
     ion-content {
+        position: relative;
+        .scroll-content {
+            background-color: #e0e0e0;
+        }
+        .messages {
+            padding-bottom: 20px;
+        }
         .time {
             text-align: center;
             p {
@@ -38,7 +45,7 @@ page-chat {
             .avater {
                 flex: 2 0 20%;
                 text-align: center;
-                margin: 8px 0px 0px 0px;
+                margin: 5px 0px 0px 0px;
                 img {
                     width: 42px;
                     height: 42px;
@@ -55,10 +62,12 @@ page-chat {
                 .document {
                     max-width: 90%;
                     border-radius: 10px;
-                    padding: 15px;
-                    background-color: #f8f8f8;
+                    padding: 10px;
+                    background-color: #f4f4f4;
+                    color: #3474e1;
                     margin: 5px;
                     pre {
+                        user-select: text;
                         margin: 0px;
                         width: 100%;
                         border-radius: 10px;
