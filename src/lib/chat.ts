@@ -48,7 +48,7 @@ export class ChatService extends Request {
 
   addMessage(user, message) {
     var messages = this.getMessages(user) || [];
-    messages = messages.filter(function(item) {
+    messages = messages.filter(function (item) {
       return item.id !== message.id;
     });
     messages.push(message);
@@ -58,5 +58,11 @@ export class ChatService extends Request {
 
   removeMessage(user, message) {
 
+  }
+
+  getMessageList(friend, page) {
+    page = page > 1 ? page : 1;
+    var url = '/message/list?id=' + friend.id + '&page=' + page;
+    return this._get(url);
   }
 }

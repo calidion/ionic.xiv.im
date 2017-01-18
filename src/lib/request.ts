@@ -10,6 +10,8 @@ import 'rxjs/add/operator/toPromise';
 
 export class Request {
   static socket
+  cbs = []
+  observable
   protected static url: string = 'http://forum.webfullstack.me';
   _get(url) {
     let options = new RequestOptions({ withCredentials: true });
@@ -27,6 +29,12 @@ export class Request {
     if (!Request.socket) {
       Request.initSocketIO();
     }
+    this.observable = Observable.fromEvent(Request.socket, 'message');
+    this.observable.subscribe((json) => {
+      for(let i = 0; this.cbs.length > i; i++) {
+        this.cbs[i](json);
+      }
+    });
   }
 
   static initSocketIO() {
@@ -34,8 +42,7 @@ export class Request {
   }
 
   subscribeMessage(cb) {
-    var observable = Observable.fromEvent(Request.socket, 'message');
-    observable.subscribe(cb);
+    this.cbs.push(cb);
   }
 
   onError(error: Response | any) {

@@ -25,7 +25,7 @@ let converter = new markdown.Converter();
 
 export class ChatPage {
   @ViewChild(Content) content: Content;
-
+  page: 1
   user
   message
   messages = []
@@ -34,6 +34,23 @@ export class ChatPage {
     public chatService: ChatService,
     public navParams: NavParams) {
     this.user = navParams.get('user');
+
+    var sub = this.chatService.getMessageList(this.user.friend, this.page++);
+    sub.subscribe(json => {
+      console.log('on get message ')
+      console.log(json);
+      console.log(!json.code);
+      console.log(json.data);
+      if (!json.code) {
+        console.log('inisd aa e');
+        var messages = json.data;
+        for (var i = 0; i < messages.length; i++) {
+          console.log('on message');
+          this.onMessage(messages[i]);
+        }
+        this.updateMessage();
+      }
+    });
     // hide tabs when view loads
     this.viewCtrl.didEnter.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'none');
@@ -45,8 +62,21 @@ export class ChatPage {
     this.viewCtrl.willLeave.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'flex');
     });
+  }
 
-
+  onMessage(message) {
+    console.log('on get message');
+    console.log(message);
+    console.log(this.user);
+    if (message.receiver.id === this.user.friend.id) {
+      message.type = 'to';
+    } else if (message.sender.id === this.user.friend.id) {
+      message.type = 'from';
+    } else {
+      return;
+    }
+    this.chatService.addUser(this.user, message);
+    this.messages = this.chatService.addMessage(this.user, message);
   }
   setCSS(selector, key, value) {
     let domElement = document.querySelectorAll(selector);
@@ -79,9 +109,6 @@ export class ChatPage {
 
   ionViewDidLoad() {
     this.chatService.subscribeMessage(function (message) {
-      console.log('chat get message');
-      console.log(message);
-      console.log(this.user);
       if (message.receiver.id === this.user.friend.id) {
         message.type = 'to';
       } else if (message.sender.id === this.user.friend.id) {
