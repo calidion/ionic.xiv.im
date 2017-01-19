@@ -103,7 +103,7 @@ export class ChatPage {
         // console.log('prism renderred');
         // console.log(data);
       });
-      if (this.content) {
+      if (this.content && this.content.scrollToBottom) {
         this.content.scrollToBottom();
       }
     }.bind(this), 1000);
