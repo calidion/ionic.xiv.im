@@ -89,6 +89,9 @@ export class ChatPage {
 
   updateMessage() {
     console.log(this.messages.length);
+    this.messages = this.messages.sort(function(a, b) {
+      return a.createdAt - b.createdAt;
+    });
     this.messages = this.messages.map(function (item) {
       item.text = converter.makeHtml(item.text);
       item.time = moment(item.time).format('LL[ ]LT');
