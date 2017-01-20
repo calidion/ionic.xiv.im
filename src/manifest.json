@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "xiv.im 免费、开源、安全、私密、自管理的IM",
+  "short_name": "xiv.im",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

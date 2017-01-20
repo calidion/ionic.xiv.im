@@ -34,7 +34,19 @@ export class ChatPage {
     public chatService: ChatService,
     public navParams: NavParams) {
     this.user = navParams.get('user');
-
+    this.chatService.subscribeMessage(function (message) {
+      if (message.receiver.id === this.user.friend.id) {
+        message.type = 'to';
+      } else if (message.sender.id === this.user.friend.id) {
+        message.type = 'from';
+      } else {
+        return;
+      }
+      this.chatService.addUser(this.user, message);
+      this.messages = this.chatService.addMessage(this.user, message);
+      this.updateMessage();
+    }.bind(this));
+    
     var sub = this.chatService.getMessageList(this.user.friend, this.page++);
     sub.subscribe(json => {
       console.log('on get message ')
@@ -44,10 +56,13 @@ export class ChatPage {
       if (!json.code) {
         console.log('inisd aa e');
         var messages = json.data;
+        var ids = [];
         for (var i = 0; i < messages.length; i++) {
           console.log('on message');
+          ids.push(messages[i].id);
           this.onMessage(messages[i]);
         }
+        this.chatService.readMessage(this.user, ids);
         this.updateMessage();
       }
     });
@@ -76,7 +91,7 @@ export class ChatPage {
       return;
     }
     this.chatService.addUser(this.user, message);
-    this.messages = this.chatService.addMessage(this.user, message);
+    this.chatService.addMessage(this.user, message);
   }
   setCSS(selector, key, value) {
     let domElement = document.querySelectorAll(selector);
@@ -89,12 +104,15 @@ export class ChatPage {
 
   updateMessage() {
     console.log(this.messages.length);
-    this.messages = this.messages.sort(function(a, b) {
+    var ids = [];
+    this.messages = this.messages.sort(function (a, b) {
       return a.createdAt - b.createdAt;
     });
     this.messages = this.messages.map(function (item) {
+      ids.push(item.id);
       item.text = converter.makeHtml(item.text);
-      item.time = moment(item.time).format('LL[ ]LT');
+      item.timeText = moment(item.time).format('LL[ ]LT');
+      item.timeStatus = moment(item.time).format('MM-DD HH:mm');
       console.log(item);
       return item;
     });
@@ -103,26 +121,16 @@ export class ChatPage {
         // console.log('prism renderred');
         // console.log(data);
       });
-      if (this.content && this.content.scrollToBottom) {
-        this.content.scrollToBottom();
+      if (this && this.content && this.content.scrollToBottom) {
+        if (this.content.scrollToBottom instanceof Function) {
+          this.content.scrollToBottom();
+        }
       }
     }.bind(this), 1000);
-
   }
 
   ionViewDidLoad() {
-    this.chatService.subscribeMessage(function (message) {
-      if (message.receiver.id === this.user.friend.id) {
-        message.type = 'to';
-      } else if (message.sender.id === this.user.friend.id) {
-        message.type = 'from';
-      } else {
-        return;
-      }
-      this.chatService.addUser(this.user, message);
-      this.messages = this.chatService.addMessage(this.user, message);
-      this.updateMessage();
-    }.bind(this));
+
   }
 
   send() {

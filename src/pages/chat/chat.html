@@ -17,7 +17,7 @@
   <div class="messages">
     <div *ngFor="let message of messages">
       <div class="time" *ngIf="message.type === 'time'">
-        <p>{{message.time}}</p>
+        <p>{{message.timeText}}</p>
       </div>
       <div class="from" *ngIf="message.type === 'from'">
         <div class="avater">
@@ -26,17 +26,17 @@
         <div class="message">
           <div class="sender">{{message.sender.nickname}}</div>
           <div class="document">
-            <pre innerHTML="{{message.text}}">
-        </pre>
+            <pre innerHTML="{{message.text}}"></pre>
           </div>
         </div>
       </div>
       <div class="to" *ngIf="message.type === 'to'">
         <div class="message">
           <div class="document">
-            <pre innerHTML="{{message.text}}">
-        </pre>
+            <pre innerHTML="{{message.text}}"></pre>
           </div>
+          <div class="read" *ngIf="message.read">已读</div>
+          <div class="read" *ngIf="!message.read">已发送</div>
         </div>
         <div class="avater">
           <img src="{{message.sender.avatar}}" />

@@ -67,7 +67,6 @@ export class HomePage {
   getDialogs() {
     this.progressService.show('正在获取聊天信息...');
     this.users = this.chatService.recent();
-    console.log(this.users);
     this.progressService.stop();
   }
 

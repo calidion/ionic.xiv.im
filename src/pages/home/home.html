@@ -49,7 +49,7 @@
             </ion-avatar>
             <h2>{{user.friend.username}}</h2>
             <p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
-            <ion-note item-right>{{user.message && user.message.time ? user.message.time : ''}}</ion-note>
+            <ion-note item-right>{{user.message && user.message.timeStatus ? user.message.timeStatus : '00-00 00:00'}}</ion-note>
           </ion-item>
         </ion-list>
       </div>

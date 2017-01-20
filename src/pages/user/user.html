@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content class='black'>
+<ion-content class='black' *ngIf="user">
   <ion-list no-lines class="top black">
     <ion-item (click)="goToDetailsPage()">
       <ion-thumbnail item-left>

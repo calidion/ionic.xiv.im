@@ -52,15 +52,28 @@ page-chat {
                 }
             }
             .message {
-                flex: 8 0 80%;
+                flex: 7 0 70%;
                 text-align: left;
                 overflow: auto;
+                position: relative;
                 .sender {
                     padding: 0 5px 8px 0px;
                     color: #ccc;
                 }
+                .read {
+                    position: absolute;
+                    top: 0px;
+                    left: 12px;
+                    
+                    background-color: #AAA;
+                    color: #FEFEFE;
+                    padding: 3px;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                    font-size: 8px;
+                }
                 .document {
-                    max-width: 90%;
+                    max-width: 70%;
                     border-radius: 10px;
                     padding: 10px;
                     background-color: #f4f4f4;
