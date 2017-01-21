@@ -29,12 +29,31 @@ export class ChatService extends Request {
   }
 
   addUser(user, message) {
+    console.log(message);
+    if (!message || !user) {
+      return;
+    }
+    if (message.sender.email !== user.friend.email) {
+      return;
+
+    }
     var users = this.getUsers(user.user) || [];
+    var extracted = user;
     users = users.filter(function (item) {
+      if (item.friend.email === user.friend.email) {
+        extracted = item;
+      }
       return item.friend.email !== user.friend.email
     });
-    user.message = message;
-    users.unshift(user);
+    if (extracted.message) {
+      if (message.createdAt > extracted.message.createdAt) {
+        extracted.message = message;
+      }
+    } else {
+      extracted.message = message;
+    }
+
+    users.unshift(extracted);
     localStorage.setItem(this.key + '_' + user.user.id, JSON.stringify(users));
   }
 

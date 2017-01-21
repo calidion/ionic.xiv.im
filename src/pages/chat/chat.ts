@@ -83,11 +83,15 @@ export class ChatPage {
         var messages = json.data;
         console.log(messages);
         this.fetched = true;
-        if (messages.length < this.limit) {
+        if (!messages.length) {
           this.end = true;
           return;
         }
-        this.end = false;
+        if (messages.length < this.limit) {
+          this.end = true;
+        } else {
+          this.end = false;
+        }
         var ids = [];
         for (var i = 0; i < messages.length; i++) {
           var message = messages[i];
