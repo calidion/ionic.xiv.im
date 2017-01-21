@@ -26,8 +26,9 @@ page-chat {
         .messages {
             padding-bottom: 20px;
         }
-        .time {
+        .time, .more, .nomore {
             text-align: center;
+            margin: 5px auto;
             p {
                 display: inline-block;
                 padding: 3px 10px;
@@ -37,6 +38,9 @@ page-chat {
                 color: #FFF;
                 border-radius: 4px;
             }
+        }
+        .nomore {
+            color: #f53d3d;
         }
         .from,
         .to {
@@ -64,7 +68,6 @@ page-chat {
                     position: absolute;
                     top: 0px;
                     left: 12px;
-                    
                     background-color: #AAA;
                     color: #FEFEFE;
                     padding: 3px;
@@ -73,17 +76,19 @@ page-chat {
                     font-size: 8px;
                 }
                 .document {
-                    max-width: 70%;
+                    max-width: 80%;
                     border-radius: 10px;
                     padding: 10px;
                     background-color: #f4f4f4;
                     color: #3474e1;
                     margin: 5px;
-                    pre {
+                    >div {
                         user-select: text;
                         margin: 0px;
-                        width: 100%;
-                        border-radius: 10px;
+                        // width: 100%;
+                        >pre {
+                            border-radius: 10px;
+                        }
                         p {
                             margin: 0px;
                         }
@@ -124,6 +129,9 @@ page-chat {
                     text-align: right;
                     display: inline-block;
                     margin-right: 10px;
+                    >div {
+                        text-align: left;
+                    }
                 }
                 .document:after {
                     content: "";
@@ -164,6 +172,7 @@ page-chat {
         }
         .send {
             flex: 1;
+            text-align: center;
             margin-top: 5px;
             display: table-cell;
             vertical-align: middle;

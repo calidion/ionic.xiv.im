@@ -14,29 +14,52 @@
 
 
 <ion-content>
+  <div *ngIf="fetched && !end" class="more" (click)="more()">
+    <a>
+      查看更多消息
+    </a>
+  </div>
+  <!--<div *ngIf="end" class="nomore">
+    已经没有更多消息
+  </div>-->
   <div class="messages">
     <div *ngFor="let message of messages">
-      <div class="time" *ngIf="message.type === 'time'">
+      <div class="time" *ngIf="message.timed">
         <p>{{message.timeText}}</p>
       </div>
       <div class="from" *ngIf="message.type === 'from'">
+
         <div class="avater">
           <img src="{{message.sender.avatar}}" />
         </div>
         <div class="message">
-          <div class="sender">{{message.sender.nickname}}</div>
+          <!--<div class="sender">{{message.sender.nickname}}</div>-->
           <div class="document">
-            <pre innerHTML="{{message.text}}"></pre>
+            <div innerHTML="{{message.text}}"></div>
           </div>
         </div>
       </div>
       <div class="to" *ngIf="message.type === 'to'">
         <div class="message">
           <div class="document">
-            <pre innerHTML="{{message.text}}"></pre>
+            <div innerHTML="{{message.text}}"></div>
           </div>
-          <div class="read" *ngIf="message.read">已读</div>
-          <div class="read" *ngIf="!message.read">已发送</div>
+          <!--<div class="read" *ngIf="message.read">已读</div>
+          <div class="read" *ngIf="!message.read">已发送<br/>{{message.timeStatus}}</div>-->
+        </div>
+        <div class="avater">
+          <img src="{{message.sender.avatar}}" />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="sending">
+      <div class="to" *ngIf="message.type === 'to'">
+        <div class="message">
+          <div class="document">
+            <div innerHTML="{{message.text}}"></div>
+          </div>
+          <!--<div class="read" *ngIf="message.read">已读</div>
+          <div class="read" *ngIf="!message.read">已发送<br/>{{message.timeStatus}}</div>-->
         </div>
         <div class="avater">
           <img src="{{message.sender.avatar}}" />
@@ -47,7 +70,7 @@
 </ion-content>
 <ion-toolbar>
   <div class="input">
-    <textarea [(ngModel)]="message" placeholder="支持Markdown的聊天软件"></textarea>
+    <textarea [(ngModel)]="message" placeholder="支持Markdown的聊天软件" (keyup.enter)="keyup($event)"></textarea>
   </div>
   <div class="send">
     <button ion-button [disabled]="!message" color="primary" (click)="send()">发送</button>
