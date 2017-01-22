@@ -34,6 +34,10 @@ export class HomePage {
     console.log('on view load');
     this.getDialogs()
   }
+  onPageWillEnter() {
+    // You can execute what you want here and it will be executed right before you enter the view
+    this.getDialogs();
+  }
   onChange(e) {
     console.log(e);
     console.log(this.type);
@@ -67,17 +71,18 @@ export class HomePage {
     }
   }
   getDialogs() {
-    this.progressService.show('正在获取聊天信息...');
+
     if (this.user) {
       this.users = this.chatService.recent(this.userService.get());
     } else {
+      this.progressService.show('正在获取聊天信息...');
       setTimeout(() => {
+        this.progressService.stop();
         this.user = this.userService.get();
         this.getDialogs();
-      }, 1000);
+      }, 100);
     }
     console.log(this.users);
-    this.progressService.stop();
   }
 
   gotoAddPage() {

@@ -60,6 +60,11 @@ export class ChatPage {
       }, 1000);
     });
     this.getMessageList(true);
+
+    setTimeout(() => {
+      this.getMessageList(true);
+    }, 30000);
+
     // hide tabs when view loads
     this.viewCtrl.didEnter.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'none');

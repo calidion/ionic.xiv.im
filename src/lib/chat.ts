@@ -16,13 +16,16 @@ export class ChatService extends Request {
   message = 'message'
   socket
   userMessage
+  static MIN_MINUTES = 10 * 60 * 6000
+
   constructor(protected http: Http) {
     super(http);
   }
 
   getUsers(user) {
     console.log(user);
-    return JSON.parse(localStorage.getItem(this.key + '_' + user.id));
+    var id = user.user ? user.user.id : user.id;
+    return JSON.parse(localStorage.getItem(this.key + '_' + id));
   }
   recent(user) {
     return this.getUsers(user);
@@ -30,12 +33,11 @@ export class ChatService extends Request {
 
   addUser(user, message) {
     console.log(message);
-    if (!message || !user) {
+    if (!user) {
       return;
     }
-    if (message.sender.email !== user.friend.email) {
+    if (message && message.sender.email !== user.friend.email) {
       return;
-
     }
     var users = this.getUsers(user.user) || [];
     var extracted = user;
@@ -52,7 +54,11 @@ export class ChatService extends Request {
     } else {
       extracted.message = message;
     }
+    if (message && message.createdAt) {
+      extracted.timeStatus = moment(message.createdAt).format('MM-DD HH:mm');
+    }
 
+    console.log('updated friend info');
     users.unshift(extracted);
     localStorage.setItem(this.key + '_' + user.user.id, JSON.stringify(users));
   }
@@ -104,7 +110,6 @@ export class ChatService extends Request {
 
     // Minial time gap for a section to occur.
 
-    const MIN_MINUTES = 10 * 60 * 6000;
 
     var lastTime = null;
     console.log(message.text);
@@ -113,7 +118,7 @@ export class ChatService extends Request {
     message.text = converter.makeHtml(message.text);
 
     messages = messages.map(function (item) {
-      if (!lastTime || (item.createdAt - lastTime) > MIN_MINUTES) {
+      if (!lastTime || (item.createdAt - lastTime) > ChatService.MIN_MINUTES) {
         item.timed = true;
       }
       lastTime = item.createdAt;

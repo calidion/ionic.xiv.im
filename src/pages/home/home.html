@@ -41,7 +41,7 @@
         </ion-card-content>
 
       </ion-card>
-      <div *ngIf="initialized && (users && users.length)">
+      <div *ngIf="initialized && (users && users.length)" class="dialogs">
         <ion-list class="chatboxes" *ngFor="let user of users">
           <ion-item (click)="chat(user)">
             <ion-avatar item-left>
@@ -49,13 +49,13 @@
             </ion-avatar>
             <h2>{{user.friend.username}}</h2>
             <p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
-            <ion-note item-right>{{user.message && user.message.timeStatus ? user.message.timeStatus : '00-00 00:00'}}</ion-note>
+            <ion-note item-right>{{user.timeStatus ? user.timeStatus : '00-00 00:00'}}</ion-note>
           </ion-item>
         </ion-list>
       </div>
     </div>
 
-    <div *ngSwitchCase="'friends'">
+    <div *ngSwitchCase="'friends'" class="friends">
       <friend-item [friends]=friends *ngIf="selected && friends && friends.length">
       </friend-item>
       <ion-card *ngIf="selected && (!friends || !friends.length)">
