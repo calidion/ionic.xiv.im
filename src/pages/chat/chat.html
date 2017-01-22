@@ -70,7 +70,7 @@
 </ion-content>
 <ion-toolbar>
   <div class="input">
-    <textarea [(ngModel)]="message" placeholder="支持Markdown的聊天软件" (keyup.enter)="keyup($event)"></textarea>
+    <textarea [(ngModel)]="message" placeholder="支持Markdown的聊天软件" (keydown.control.Enter)="keyup($event)"></textarea>
   </div>
   <div class="send">
     <button ion-button [disabled]="!message" color="primary" (click)="send()">发送</button>

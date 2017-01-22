@@ -18,6 +18,7 @@ export class HomePage {
   users
   initialized
   selected
+  user
   constructor(public navCtrl: NavController,
     private toastCtrl: ToastController,
     public userService: UserService,
@@ -27,6 +28,7 @@ export class HomePage {
     this.type = 'dialogs';
     this.initialized = true;
     this.selected = false;
+    this.user = this.userService.get();
   }
   ionViewDidLoad() {
     console.log('on view load');
@@ -66,7 +68,15 @@ export class HomePage {
   }
   getDialogs() {
     this.progressService.show('正在获取聊天信息...');
-    this.users = this.chatService.recent(this.userService.get());
+    if (this.user) {
+      this.users = this.chatService.recent(this.userService.get());
+    } else {
+      setTimeout(() => {
+        this.user = this.userService.get();
+        this.getDialogs();
+      }, 1000);
+    }
+    console.log(this.users);
     this.progressService.stop();
   }
 

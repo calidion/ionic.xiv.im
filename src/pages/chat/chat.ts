@@ -31,6 +31,8 @@ export class ChatPage {
   messages = []
   end = false
   fetched = false
+  lastTime = null
+  newMessage = false;
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
     public chatService: ChatService,
@@ -43,11 +45,11 @@ export class ChatPage {
 
     // this.page = parseInt((this.messages.length / this.limit).toFixed(0));
 
-
     // From Socket.IO
     this.chatService.subscribeMessage(message => {
       console.log('inside socket.io messages');
       this.messages = this.onMessage(message);
+      this.newMessage = true;
       if (timer) {
         return;
       }
@@ -87,6 +89,7 @@ export class ChatPage {
           this.end = true;
           return;
         }
+        this.newMessage = true;
         if (messages.length < this.limit) {
           this.end = true;
         } else {
@@ -100,14 +103,8 @@ export class ChatPage {
           }
           this.onMessage(message);
         }
-        console.log('get messages');
-        console.log(messages);
-        console.log('inside get messages');
         this.chatService.readMessage(this.user, ids);
         this.messages = this.chatService.getMessages(this.user);
-        console.log('after get messages');
-        console.log(this.messages);
-
         this.updateMessage(scroll);
       }
     });
@@ -136,7 +133,6 @@ export class ChatPage {
   updateMessage(scroll) {
     if (this.messages && this.messages.length) {
       console.log(this.messages.length);
-
       setTimeout(function () {
         prism.highlightAll('', function (data) {
           // console.log('prism renderred');
@@ -156,15 +152,24 @@ export class ChatPage {
   }
 
   send() {
+    this.newMessage = false;
     var observable = this.chatService.sendMessage(this.user.friend.id, this.message);
     this.message = '';
     observable.subscribe((json) => {
       // this.messages = this.chatService.addMessage(this.user, this.message, 'from');
       // this.updateMessage();
+      setTimeout(() => {
+        if (this.newMessage) {
+          this.page = 1;
+          this.getMessageList(true);
+        }
+      }, 1000);
     });
   }
   keyup(event) {
+    console.log('inside key up');
     console.log(event);
+    this.send();
   }
 
   more() {
