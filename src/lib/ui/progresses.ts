@@ -10,8 +10,11 @@ export class ProgressService {
   ) {
 
   }
-  show(message) {
+  show(message, reuse = false) {    
     if (this.loading) {
+      if (reuse) {
+        return;
+      }
       this.loading.dismiss();
     }
     this.loading = this.loadingCtrl.create({

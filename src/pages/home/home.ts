@@ -73,11 +73,11 @@ export class HomePage {
   getDialogs() {
 
     if (this.user) {
+      this.progressService.stop();
       this.users = this.chatService.recent(this.userService.get());
     } else {
-      this.progressService.show('正在获取聊天信息...');
+      this.progressService.show('正在获取聊天信息...', true);
       setTimeout(() => {
-        this.progressService.stop();
         this.user = this.userService.get();
         this.getDialogs();
       }, 100);
