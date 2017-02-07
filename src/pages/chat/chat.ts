@@ -4,6 +4,9 @@ import * as markdown from 'showdown';
 import * as prism from 'prismjs';
 import { ChatService } from '../../lib/chat'
 import * as moment from 'moment'
+
+let converter = new markdown.Converter();
+
 moment.locale('zh-CN');
 
 /*
@@ -41,34 +44,30 @@ export class ChatPage {
 
     var timer = null;
 
-    // this.messages = this.chatService.getMessages(this.user) || [];
-
-    // this.page = parseInt((this.messages.length / this.limit).toFixed(0));
-
     // From Socket.IO
     this.chatService.subscribeMessage(message => {
-      console.log('inside socket.io messages');
-      this.messages = this.onMessage(message);
+      // this.messages = this.onMessage(message);
       this.newMessage = true;
       if (timer) {
         return;
       }
       timer = setTimeout(() => {
-        this.messages = this.chatService.getMessages(this.user);
+        // this.messages = this.chatService.getMessages(this.user);
         this.updateMessage(true);
         timer = null;
       }, 1000);
     });
+
     this.getMessageList(true);
 
-    setTimeout(() => {
-      this.getMessageList(true);
-    }, 30000);
+    // setTimeout(() => {
+    //   this.getMessageList(true);
+    // }, 30000);
 
     // hide tabs when view loads
     this.viewCtrl.didEnter.subscribe(() => {
       this.setCSS('.tabbar', 'display', 'none');
-      this.messages = this.chatService.getMessages(this.user);
+      // this.messages = this.chatService.getMessages(this.user);
       this.updateMessage(false);
     });
 
@@ -83,12 +82,10 @@ export class ChatPage {
       return;
     }
     // Get Initial Messages
-
     var sub = this.chatService.getMessageList(this.user, this.page++);
     sub.subscribe(json => {
       if (!json.code) {
         var messages = json.data;
-        console.log(messages);
         this.fetched = true;
         if (!messages.length) {
           this.end = true;
@@ -101,15 +98,43 @@ export class ChatPage {
           this.end = false;
         }
         var ids = [];
-        for (var i = 0; i < messages.length; i++) {
-          var message = messages[i];
-          if (!message.read) {
-            ids.push(message.id);
+        // for (var i = 0; i < messages.length; i++) {
+        //   var message = messages[i];
+        //   if (!message.read) {
+        //     ids.push(message.id);
+        //   }
+        //   message.timeText = moment(message.createdAt).format('LL[ ]LT');
+        //   message.timeStatus = moment(message.createdAt).format('MM-DD HH:mm');
+        //   message.text = converter.makeHtml(message.text);
+        //   this.onMessage(message);
+        //   // this.chatService.addMessage(message, messages);
+        // }
+        var lastTime = null;
+        // console.log(message.text);
+
+        messages = this.messages.concat(messages);
+
+        messages = messages.map(function (item) {
+          if (!item.read) {
+            ids.push(item.id);
           }
-          this.onMessage(message);
-        }
-        this.chatService.readMessage(this.user, ids);
-        this.messages = this.chatService.getMessages(this.user);
+          item.timeText = moment(item.createdAt).format('LL[ ]LT');
+          item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+          item.text = converter.makeHtml(item.text);
+          this.onMessage(item);
+          if (!lastTime || (item.createdAt - lastTime) > ChatService.MIN_MINUTES) {
+            item.timed = true;
+          }
+          lastTime = item.createdAt;
+          return item;
+        }.bind(this));
+        
+        messages = messages.sort(function (a, b) {
+          return a.createdAt - b.createdAt;
+        });
+        this.chatService.readMessage(this.user, ids, messages);
+        this.messages = messages;
+        // this.messages = this.chatService.getMessages(this.user);
         this.updateMessage(scroll);
       }
     });
@@ -124,7 +149,7 @@ export class ChatPage {
       return;
     }
     this.chatService.addUser(this.user, message);
-    return this.chatService.addMessage(this.user, message);
+    // return this.chatService.addMessage(this.user, message);
   }
   setCSS(selector, key, value) {
     let domElement = document.querySelectorAll(selector);
@@ -135,13 +160,15 @@ export class ChatPage {
     } // end if
   }
 
+  scrollToBottom() {
+
+  }
+
   updateMessage(scroll) {
     if (this.messages && this.messages.length) {
       console.log(this.messages.length);
       setTimeout(function () {
         prism.highlightAll('', function (data) {
-          // console.log('prism renderred');
-          // console.log(data);
         });
         if (scroll && this && this.content && this.content.scrollToBottom) {
           if (this.content.scrollToBottom instanceof Function) {
@@ -161,8 +188,6 @@ export class ChatPage {
     var observable = this.chatService.sendMessage(this.user.friend.id, this.message);
     this.message = '';
     observable.subscribe((json) => {
-      // this.messages = this.chatService.addMessage(this.user, this.message, 'from');
-      // this.updateMessage();
       setTimeout(() => {
         if (this.newMessage) {
           this.page = 1;

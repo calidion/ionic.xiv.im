@@ -13,7 +13,7 @@ moment.locale('zh-CN');
 
 export class ChatService extends Request {
   key = 'friends'
-  message = 'message'
+  // message = 'message'
   socket
   userMessage
   static MIN_MINUTES = 10 * 60 * 6000
@@ -63,30 +63,30 @@ export class ChatService extends Request {
     localStorage.setItem(this.key + '_' + user.user.id, JSON.stringify(users));
   }
 
-  getKey(user) {
-    return this.message + '_' + user.user.id;
-  }
+  // getKey(user) {
+  //   return this.message + '_' + user.user.id;
+  // }
 
-  getMessages(user) {
-    if (this.userMessage && this.userMessage[user.user.id]) {
-      return this.userMessage[user.user.id][user.friend.email];
-    }
-    var storage = localStorage.getItem(this.getKey(user)) || '{}';
-    var data = JSON.parse(storage);
-    var json = data[user.user.id] || {};
-    return json[user.friend.email] || [];
-  }
+  // getMessages(user) {
+  //   if (this.userMessage && this.userMessage[user.user.id]) {
+  //     return this.userMessage[user.user.id][user.friend.email];
+  //   }
+  //   var storage = localStorage.getItem(this.getKey(user)) || '{}';
+  //   var data = JSON.parse(storage);
+  //   var json = data[user.user.id] || {};
+  //   return json[user.friend.email] || [];
+  // }
 
-  setMessages(user, messages) {
-    var storage = localStorage.getItem(this.getKey(user)) || '{}';
-    var data = JSON.parse(storage);
-    var json = data[user.user.id] || {};
-    json[user.friend.email] = messages;
-    data[user.user.id] = json;
-    this.userMessage = data;
-    console.log(data);
-    localStorage.setItem(this.getKey(user), JSON.stringify(data));
-  }
+  // setMessages(user, messages) {
+  //   var storage = localStorage.getItem(this.getKey(user)) || '{}';
+  //   var data = JSON.parse(storage);
+  //   var json = data[user.user.id] || {};
+  //   json[user.friend.email] = messages;
+  //   data[user.user.id] = json;
+  //   this.userMessage = data;
+  //   console.log(data);
+  //   localStorage.setItem(this.getKey(user), JSON.stringify(data));
+  // }
 
   sendMessage(to, text) {
     return this._post('/message/new', {
@@ -96,21 +96,22 @@ export class ChatService extends Request {
     });
   }
 
-  addMessage(user, message) {
-    var storage = localStorage.getItem(this.getKey(user)) || '{}';
-    var data = JSON.parse(storage);
-    var json = data[user.user.id] || {};
-    console.log(json);
 
-    var messages = json[user.friend.email] || [];
+  
+
+  addMessage(message, messages) {
+    // var storage = localStorage.getItem(this.getKey(user)) || '{}';
+    // var data = JSON.parse(storage);
+    // var json = data[user.user.id] || {};
+    // console.log(json);
+
+    // var messages = json[user.friend.email] || [];
     console.log(messages);
     messages = messages.filter(function (item) {
       return item.id !== message.id;
     });
 
     // Minial time gap for a section to occur.
-
-
     var lastTime = null;
     console.log(message.text);
     message.timeText = moment(message.createdAt).format('LL[ ]LT');
@@ -128,54 +129,54 @@ export class ChatService extends Request {
     messages = messages.sort(function (a, b) {
       return a.createdAt - b.createdAt;
     });
-    json[user.friend.email] = messages;
-    data[user.user.id] = json;
-    this.userMessage = data;
-    localStorage.setItem(this.getKey(user), JSON.stringify(data));
+    // json[user.friend.email] = messages;
+    // data[user.user.id] = json;
+    // this.userMessage = data;
+    // localStorage.setItem(this.getKey(user), JSON.stringify(data));
     return messages;
   }
 
-  getUserCount(user) {
-    let messages = this.getMessages(user) || [];
-    var count = 0;
-    for (var i = 0; i < messages.length; i++) {
-      if (!messages[i].read) {
-        count++;
-      }
-    }
-    return count;
-  }
+  // getUserCount(user) {
+  //   let messages = this.getMessages(user) || [];
+  //   var count = 0;
+  //   for (var i = 0; i < messages.length; i++) {
+  //     if (!messages[i].read) {
+  //       count++;
+  //     }
+  //   }
+  //   return count;
+  // }
 
-  readMessage(user, ids) {
+  readMessage(user, ids, messages) {
     var read = this._post('/message/read', {
       id: ids.join(',')
     });
     read.subscribe(json => {
       if (!json.code) {
-        var messages = this.getMessages(user) || [];
+        // var messages = this.getMessages(user) || [];
         messages = messages.map(function (item) {
           if (ids.indexOf(item.id) !== -1) {
             item.read = true;
           }
           return item;
         });
-        this.setMessages(user, messages);
-        return messages;
+        // this.setMessages(user, messages);
+        // return messages;
       }
     });
   }
 
-  removeMessage(user, message) {
+  removeMessage(user, message, messages) {
     var read = this._post('/message/remove', {
       id: message.id
     });
     read.subscribe(json => {
       if (!json.code) {
-        var messages = this.getMessages(user) || [];
+        // var messages = this.getMessages(user) || [];
         messages = messages.filter(function (item) {
           return item.id !== message.id;
         });
-        localStorage.setItem(this.message + '_' + user.friend.email, JSON.stringify(messages));
+        // localStorage.setItem(this.message + '_' + user.friend.email, JSON.stringify(messages));
       }
     });
   }

@@ -27,6 +27,7 @@ import { ProgressService } from '../lib/ui/progresses';
 import { AlertService } from '../lib/ui/alerts';
 import { ChatService } from '../lib/chat';
 import { ArticleService } from '../lib/article';
+import { BreathService } from '../lib/breath';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { ArticleService } from '../lib/article';
     },
     UserService, GitHubService,
     ProgressService, AlertService,
-    ChatService, ArticleService
+    ChatService, ArticleService,
+    BreathService
   ]
 })
 export class AppModule { }
