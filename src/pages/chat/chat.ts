@@ -46,7 +46,6 @@ export class ChatPage {
 
     // From Socket.IO
     this.chatService.subscribeMessage(message => {
-      // this.messages = this.onMessage(message);
       this.newMessage = true;
       if (timer) {
         return;
@@ -59,10 +58,6 @@ export class ChatPage {
     });
 
     this.getMessageList(true);
-
-    // setTimeout(() => {
-    //   this.getMessageList(true);
-    // }, 30000);
 
     // hide tabs when view loads
     this.viewCtrl.didEnter.subscribe(() => {
@@ -98,22 +93,13 @@ export class ChatPage {
           this.end = false;
         }
         var ids = [];
-        // for (var i = 0; i < messages.length; i++) {
-        //   var message = messages[i];
-        //   if (!message.read) {
-        //     ids.push(message.id);
-        //   }
-        //   message.timeText = moment(message.createdAt).format('LL[ ]LT');
-        //   message.timeStatus = moment(message.createdAt).format('MM-DD HH:mm');
-        //   message.text = converter.makeHtml(message.text);
-        //   this.onMessage(message);
-        //   // this.chatService.addMessage(message, messages);
-        // }
+
         var lastTime = null;
-        // console.log(message.text);
 
         messages = this.messages.concat(messages);
-
+        messages = messages.sort(function (a, b) {
+          return a.createdAt - b.createdAt;
+        });
         messages = messages.map(function (item) {
           if (!item.read) {
             ids.push(item.id);
@@ -128,13 +114,10 @@ export class ChatPage {
           lastTime = item.createdAt;
           return item;
         }.bind(this));
-        
-        messages = messages.sort(function (a, b) {
-          return a.createdAt - b.createdAt;
-        });
+
+
         this.chatService.readMessage(this.user, ids, messages);
         this.messages = messages;
-        // this.messages = this.chatService.getMessages(this.user);
         this.updateMessage(scroll);
       }
     });
@@ -149,8 +132,8 @@ export class ChatPage {
       return;
     }
     this.chatService.addUser(this.user, message);
-    // return this.chatService.addMessage(this.user, message);
   }
+  
   setCSS(selector, key, value) {
     let domElement = document.querySelectorAll(selector);
     if (domElement !== null) {
