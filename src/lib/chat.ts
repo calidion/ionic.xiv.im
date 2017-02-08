@@ -3,7 +3,6 @@ import { Http } from '@angular/http';
 
 import { Request } from './request';
 import * as markdown from 'showdown';
-import * as prism from 'prismjs';
 import * as moment from 'moment'
 let converter = new markdown.Converter();
 
