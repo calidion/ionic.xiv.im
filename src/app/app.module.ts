@@ -17,7 +17,7 @@ import { UserItemGitHubPage } from '../pages/user/github/item';
 import { GroupPage } from '../pages/group/group';
 import { FriendItemPage } from '../pages/friend/item/item';
 import { ChatPage } from '../pages/chat/chat';
-import { MessageItemPage } from '../pages/chat/message/message';
+// import { MessageItemPage } from '../pages/chat/message/message';
 
 
 // Services
@@ -45,7 +45,7 @@ import { BreathService } from '../lib/breath';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    MessageItemPage,
+    // MessageItemPage,
     ArticleDetailPage
   ],
   imports: [
@@ -68,7 +68,7 @@ import { BreathService } from '../lib/breath';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    MessageItemPage,
+    // MessageItemPage,
     ArticleDetailPage
   ],
   providers: [

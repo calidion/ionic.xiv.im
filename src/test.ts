@@ -7,11 +7,11 @@ import 'zone.js/dist/jasmine-patch';
 import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { getTestBed, TestBed } from '@angular/core/testing';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { getTestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform } from 'ionic-angular';
-import { ConfigMock } from './mocks';
+// import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform } from 'ionic-angular';
+// import { ConfigMock } from './mocks';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
