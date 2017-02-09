@@ -8,7 +8,8 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "minify": "ionic-app-scripts minify",
-    "test": "ng test --single-run --code-coverage"
+    "test": "ng test --single-run --code-coverage",
+    "coverage": "http-server -c-1 -o -p 9875 ./coverage"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -37,6 +38,7 @@
     "@types/node": "^7.0.5",
     "angular-cli": "^1.0.0-beta.28.3",
     "codecov": "^1.0.1",
+    "http-server": "^0.9.0",
     "jasmine-core": "^2.5.2",
     "jasmine-spec-reporter": "^3.2.0",
     "karma": "^1.4.1",

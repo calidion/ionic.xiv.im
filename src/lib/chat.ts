@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Request } from './request';
-import * as markdown from 'showdown';
+// import * as markdown from 'showdown';
 import * as moment from 'moment'
-let converter = new markdown.Converter();
+// let converter = new markdown.Converter();
 
 moment.locale('zh-CN');
 
@@ -21,7 +21,6 @@ export class ChatService extends Request {
   }
 
   getUsers(user) {
-    console.log(user);
     var id = user.user ? user.user.id : user.id;
     return JSON.parse(localStorage.getItem(this.key + '_' + id));
   }
@@ -68,51 +67,6 @@ export class ChatService extends Request {
       time: new Date()
     });
   }
-
-
-  
-
-  // addMessage(message, messages) {
-
-  //   messages = messages.filter(function (item) {
-  //     return item.id !== message.id;
-  //   });
-
-  //   // Minial time gap for a section to occur.
-  //   var lastTime = null;
-  //   console.log(message.text);
-  //   message.timeText = moment(message.createdAt).format('LL[ ]LT');
-  //   message.timeStatus = moment(message.createdAt).format('MM-DD HH:mm');
-  //   message.text = converter.makeHtml(message.text);
-
-  //   messages = messages.map(function (item) {
-  //     if (!lastTime || (item.createdAt - lastTime) > ChatService.MIN_MINUTES) {
-  //       item.timed = true;
-  //     }
-  //     lastTime = item.createdAt;
-  //     return item;
-  //   });
-  //   messages.push(message);
-  //   messages = messages.sort(function (a, b) {
-  //     return a.createdAt - b.createdAt;
-  //   });
-  //   // json[user.friend.email] = messages;
-  //   // data[user.user.id] = json;
-  //   // this.userMessage = data;
-  //   // localStorage.setItem(this.getKey(user), JSON.stringify(data));
-  //   return messages;
-  // }
-
-  // getUserCount(user) {
-  //   let messages = this.getMessages(user) || [];
-  //   var count = 0;
-  //   for (var i = 0; i < messages.length; i++) {
-  //     if (!messages[i].read) {
-  //       count++;
-  //     }
-  //   }
-  //   return count;
-  // }
 
   readMessage(user, ids, messages) {
     var read = this._post('/message/read', {

@@ -46,7 +46,6 @@ describe('Component: Root Component', () => {
   });
 
   it('initialises with a root page of HomePage', () => {
-    // console.log(app);
     expect(app['rootPage']).toBe(TabsPage);
   });
 
