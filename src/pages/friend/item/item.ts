@@ -16,17 +16,17 @@ import { ChatPage } from '../../chat/chat';
 @Component({
   selector: 'friend-item',
   templateUrl: 'item.html',
-  inputs: ['friends']
+  inputs: ['friends', 'counts']
 })
 
 export class FriendItemPage {
+  counts
   friends
   constructor(
     public navCtrl: NavController,
     public alertService: AlertService,
     public chatService: ChatService,
     public userService: UserService) {
-    console.log(this.friends);
   }
 
   onRemove(json) {

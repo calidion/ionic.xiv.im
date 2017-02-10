@@ -21,6 +21,10 @@ export class TabsPage {
   article: any = ArticlePage;
   user: any = UserPage;
   count = 0;
+  friends = [];
+  counts = {};
+  TIME_LIMIT = 100000;
+
   constructor(
     public userSerivce: UserService,
     navController: NavController,
@@ -28,26 +32,21 @@ export class TabsPage {
     public breathService: BreathService) {
     progress.show('正在请求用户信息...');
     let observable = userSerivce.profile();
+    breathService.addListener(this);
     observable.subscribe((json) => {
       if (json['code'] !== 0) {
         userSerivce.auth();
       } else {
         userSerivce.set(json.data);
         progress.stop();
+        this.breathService.breath(count => {
+          this.count = count;
+        });
         setInterval(() => {
-          this.breath();
-        }, 10000);
-      }
-    });
-  }
-
-  breath() {
-    var user = this.userSerivce.get();
-    var updates = this.breathService.update(user.id);
-    updates.subscribe(json => {
-      console.log(json);
-      if (json.code === 0) {
-        this.count = json.data;
+          this.breathService.breath(count => {
+            this.count = count;
+          });
+        }, this.TIME_LIMIT);
       }
     });
   }

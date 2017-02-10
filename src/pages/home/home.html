@@ -1,80 +1,81 @@
 <ion-header>
-  <!--<ion-navbar>
+	<!--<ion-navbar>
     <ion-title>xiv.im
       <div class="tools">
         <ion-icon name="add-circle" color="energized" (click)="gotoAddPage()"></ion-icon>
       </div>
     </ion-title>
   </ion-navbar>-->
-  <ion-toolbar >
-    <ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
-      <ion-segment-button value="dialogs">
-        <ion-icon name="chatboxes"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="friends">
-        <ion-icon name="people"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-    <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="gotoAddPage()">
+	<ion-toolbar>
+		<ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
+			<ion-segment-button value="dialogs">
+				<ion-icon name="chatboxes"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="friends">
+				<ion-icon name="people"></ion-icon>
+			</ion-segment-button>
+		</ion-segment>
+		<ion-buttons end>
+			<button ion-button icon-only color="royal" (click)="gotoAddPage()">
         <ion-icon name="person-add"></ion-icon>
       </button>
-    </ion-buttons>
-  </ion-toolbar>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div [ngSwitch]="type">
-    <div *ngSwitchCase="'dialogs'">
-      <ion-card *ngIf="initialized && (!users || !users.length)">
+	<div [ngSwitch]="type">
+		<div *ngSwitchCase="'dialogs'">
+			<ion-card *ngIf="initialized && (!users || !users.length)">
 
-        <ion-card-header>
-          最近你还没有跟好友聊天哦！
-        </ion-card-header>
+				<ion-card-header>
+					最近你还没有跟好友聊天哦！
+				</ion-card-header>
 
-        <ion-card-content>
-          <p>马上找好友聊天？</p>
-          <button ion-button color="success" (click)="getFriends()">
+				<ion-card-content>
+					<p>马上找好友聊天？</p>
+					<button ion-button color="success" (click)="getFriends()">
         <ion-icon name="chatbubbles" color="bright"></ion-icon>&nbsp;聊天
       </button>
 
-        </ion-card-content>
+				</ion-card-content>
 
-      </ion-card>
-      <div *ngIf="initialized && (users && users.length)" class="dialogs">
-        <ion-list class="chatboxes" *ngFor="let user of users">
-          <ion-item (click)="chat(user)">
-            <ion-avatar item-left>
-              <img src="{{user.friend && user.friend.avatar}}">
-            </ion-avatar>
-            <h2>{{user.friend.username}}</h2>
-            <p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
-            <ion-note item-right>{{user.timeStatus ? user.timeStatus : '00-00 00:00'}}</ion-note>
-          </ion-item>
-        </ion-list>
-      </div>
-    </div>
+			</ion-card>
+			<div *ngIf="initialized && (users && users.length)" class="dialogs">
+				<ion-list class="chatboxes" *ngFor="let user of users">
+					<ion-item (click)="chat(user)">
+						<ion-avatar item-left>
+							<img src="{{user.friend && user.friend.avatar}}">
+						</ion-avatar>
+						<h2>{{user.friend.username}}</h2>
+						<p>{{user.message && user.message.text || '暂无聊天记录'}}</p>
+						<ion-note item-right>{{user.timeStatus ? user.timeStatus : '00-00 00:00'}}</ion-note>
+						<ion-badge item-right color="danger" *ngIf="counts[user.friend.id]">{{counts[user.friend.id]}}</ion-badge>
+					</ion-item>
+				</ion-list>
+			</div>
+		</div>
 
-    <div *ngSwitchCase="'friends'" class="friends">
-      <friend-item [friends]=friends *ngIf="selected && friends && friends.length">
-      </friend-item>
-      <ion-card *ngIf="selected && (!friends || !friends.length)">
+		<div *ngSwitchCase="'friends'" class="friends">
+			<friend-item [friends]=friends [counts]=counts *ngIf="selected && friends && friends.length">
+			</friend-item>
+			<ion-card *ngIf="selected && (!friends || !friends.length)">
 
-        <ion-card-header>
-          你还没有添加好友哦！
-        </ion-card-header>
+				<ion-card-header>
+					你还没有添加好友哦！
+				</ion-card-header>
 
-        <ion-card-content>
-          <p>马上添加好友？</p>
-          <button ion-button color="danger" (click)="gotoAddPage()">
+				<ion-card-content>
+					<p>马上添加好友？</p>
+					<button ion-button color="danger" (click)="gotoAddPage()">
         <ion-icon name="remove-circle"></ion-icon>
         添加
       </button>
 
-        </ion-card-content>
+				</ion-card-content>
 
-      </ion-card>
-    </div>
-  </div>
+			</ion-card>
+		</div>
+	</div>
 
 </ion-content>

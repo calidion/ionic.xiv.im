@@ -1,21 +1,22 @@
-  <ion-list *ngFor="let user of friends">
-    <ion-item-sliding>
-      <ion-item (click)="chat(user)">
-        <ion-avatar item-left>
-          <img src="{{user.friend.avatar}}">
-        </ion-avatar>
-        <h2>{{user.friend.username}}</h2>
-        <p>{{user.friend.email}}</p>
-      </ion-item>
-      <ion-item-options side="right">
-        <!--<button ion-button color="primary">
+<ion-list *ngFor="let user of friends">
+	<ion-item-sliding>
+		<ion-item (click)="chat(user)">
+			<ion-avatar item-left>
+				<img src="{{user.friend.avatar}}">
+			</ion-avatar>
+			<h2>{{user.friend.username}}</h2>
+			<p>{{user.friend.email}}</p>
+			<ion-badge item-right color="danger" *ngIf="counts[user.friend.id]">{{counts[user.friend.id]}}</ion-badge>
+		</ion-item>
+		<ion-item-options side="right">
+			<!--<button ion-button color="primary">
         <ion-icon name="text"></ion-icon>
         聊天
       </button>-->
-        <button ion-button color="danger" (click)="remove(user)">
+			<button ion-button color="danger" (click)="remove(user)">
         <ion-icon name="remove-circle"></ion-icon>
         删除
       </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+		</ion-item-options>
+	</ion-item-sliding>
+</ion-list>

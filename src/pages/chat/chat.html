@@ -35,14 +35,14 @@
         <div class="message">
           <!--<div class="sender">{{message.sender.nickname}}</div>-->
           <div class="document">
-            <div innerHTML="{{message.text}}"></div>
+            <div innerHTML="{{message.html}}"></div>
           </div>
         </div>
       </div>
       <div class="to" *ngIf="message.type === 'to'">
         <div class="message">
           <div class="document">
-            <div innerHTML="{{message.text}}"></div>
+            <div innerHTML="{{message.html}}"></div>
           </div>
           <!--<div class="read" *ngIf="message.read">已读</div>
           <div class="read" *ngIf="!message.read">已发送<br/>{{message.timeStatus}}</div>-->
@@ -56,7 +56,7 @@
       <div class="to" *ngIf="message.type === 'to'">
         <div class="message">
           <div class="document">
-            <div innerHTML="{{message.text}}"></div>
+            <div innerHTML="{{message.html}}"></div>
           </div>
           <!--<div class="read" *ngIf="message.read">已读</div>
           <div class="read" *ngIf="!message.read">已发送<br/>{{message.timeStatus}}</div>-->

@@ -106,7 +106,7 @@ export class ChatPage {
           }
           item.timeText = moment(item.createdAt).format('LL[ ]LT');
           item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
-          item.text = converter.makeHtml(item.text);
+          item.html = converter.makeHtml(item.text);
           this.onMessage(item);
           if (!lastTime || (item.createdAt - lastTime) > ChatService.MIN_MINUTES) {
             item.timed = true;
