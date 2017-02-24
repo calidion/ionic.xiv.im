@@ -91,7 +91,6 @@ export class HomePage {
     }
   }
   getDialogs() {
-
     if (this.user) {
       this.progressService.stop();
       this.users = this.chatService.recent(this.userService.get());
