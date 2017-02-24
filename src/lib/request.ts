@@ -13,6 +13,7 @@ export class Request {
   cbs = []
   observable
   protected static url: string = 'http://forum.webfullstack.me';
+  protected static urlSocketIO: string = 'ws://forum.webfullstack.me';
   _get(url) {
     let options = new RequestOptions({ withCredentials: true });
     return this.http.get(Request.url + url, options)
@@ -38,7 +39,7 @@ export class Request {
   }
 
   static initSocketIO() {
-    Request.socket = io(Request.url);
+    Request.socket = io(Request.urlSocketIO);
   }
 
   subscribeMessage(cb) {

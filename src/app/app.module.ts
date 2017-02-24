@@ -28,6 +28,7 @@ import { AlertService } from '../lib/ui/alerts';
 import { ChatService } from '../lib/chat';
 import { ArticleService } from '../lib/article';
 import { BreathService } from '../lib/breath';
+import { GroupService } from '../lib/group';
 
 
 @NgModule({
@@ -79,7 +80,7 @@ import { BreathService } from '../lib/breath';
     UserService, GitHubService,
     ProgressService, AlertService,
     ChatService, ArticleService,
-    BreathService
+    BreathService, GroupService
   ]
 })
 export class AppModule { }

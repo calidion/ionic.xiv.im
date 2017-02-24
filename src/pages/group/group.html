@@ -1,69 +1,69 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
-      <ion-segment-button value="recent">
-        <ion-icon name="time"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="groups">
-        <ion-icon name="people"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-    <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="gotoAddPage()">
+	<ion-toolbar>
+		<ion-segment [(ngModel)]="type" color="primarily" (ionChange)="onChange($event)">
+			<ion-segment-button value="recent">
+				<ion-icon name="time"></ion-icon>
+			</ion-segment-button>
+			<ion-segment-button value="groups">
+				<ion-icon name="people"></ion-icon>
+			</ion-segment-button>
+		</ion-segment>
+		<ion-buttons end>
+			<button ion-button icon-only color="royal" (click)="gotoCreatePage()">
         <ion-icon name="add"></ion-icon>
       </button>
-    </ion-buttons>
-  </ion-toolbar>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div [ngSwitch]="type">
-    <div *ngSwitchCase="'recent'">
-      <ion-card *ngIf="initialized && (!groups || !groups.length)">
+	<div [ngSwitch]="type">
+		<div *ngSwitchCase="'recent'">
+			<ion-card *ngIf="initialized && (!groups || !groups.length)">
 
-        <ion-card-header>
-          没有最近聊天的群组信息
-        </ion-card-header>
+				<ion-card-header>
+					没有最近聊天的群组信息
+				</ion-card-header>
 
-        <ion-card-content>
-          <p>马上进入群聊</p>
-          <button ion-button color="success" (click)="getGroups()"><ion-icon name="chatbubbles" color="bright"></ion-icon>&nbsp;聊天</button>
-        </ion-card-content>
-      </ion-card>
-      <div *ngIf="initialized && (groups && groups.length)" class="dialogs">
-        <ion-list class="chatboxes" *ngFor="let group of groups">
-          <ion-item (click)="chat(group)">
-            <ion-avatar item-left>
-              <img src="{{group.friend && group.friend.avatar}}">
-            </ion-avatar>
-            <h2>{{group.name}}</h2>
-            <p>{{group.message && group.message.text || '暂无聊天记录'}}</p>
-            <ion-note item-right>{{group.timeStatus ? group.timeStatus : '00-00 00:00'}}</ion-note>
-            <ion-badge item-right color="danger" *ngIf="counts[group.friend.id]">{{counts[group.friend.id]}}</ion-badge>
-          </ion-item>
-        </ion-list>
-      </div>
-    </div>
+				<ion-card-content>
+					<p>马上进入群聊</p>
+					<button ion-button color="success" (click)="getGroups()"><ion-icon name="chatbubbles" color="bright"></ion-icon>&nbsp;聊天</button>
+				</ion-card-content>
+			</ion-card>
+			<div *ngIf="initialized && (groups && groups.length)" class="dialogs">
+				<ion-list class="chatboxes" *ngFor="let group of groups">
+					<ion-item (click)="chat(group)">
+						<ion-avatar item-left>
+							<img src="{{group.friend && group.friend.avatar}}">
+						</ion-avatar>
+						<h2>{{group.name}}</h2>
+						<p>{{group.message && group.message.text || '暂无聊天记录'}}</p>
+						<ion-note item-right>{{group.timeStatus ? group.timeStatus : '00-00 00:00'}}</ion-note>
+						<ion-badge item-right color="danger" *ngIf="counts[group.friend.id]">{{counts[group.friend.id]}}</ion-badge>
+					</ion-item>
+				</ion-list>
+			</div>
+		</div>
 
-    <div *ngSwitchCase="'groups'" class="friends">
-      <friend-item [friends]=friends [counts]=counts *ngIf="selected && friends && friends.length">
-      </friend-item>
-      <ion-card *ngIf="selected && (!friends || !friends.length)">
+		<div *ngSwitchCase="'groups'" class="friends">
+			<friend-item [friends]=groups [counts]=counts *ngIf="selected && groups && groups.length">
+			</friend-item>
+			<ion-card *ngIf="selected && (!groups || !groups.length)">
 
-        <ion-card-header>
-          你还没有添加好友哦！
-        </ion-card-header>
+				<ion-card-header>
+					你还没有创建或者加入群组哦！
+				</ion-card-header>
 
-        <ion-card-content>
-          <p>马上添加好友？</p>
-          <button ion-button color="danger" (click)="gotoAddPage()">
-        <ion-icon name="remove-circle"></ion-icon>
-        添加
+				<ion-card-content>
+					<p>马上创建群组？</p>
+					<button ion-button color="danger" (click)="gotoCreatePage()">
+        <ion-icon name="add-circle"></ion-icon>
+        创建
       </button>
 
-        </ion-card-content>
+				</ion-card-content>
 
-      </ion-card>
-    </div>
-  </div>
+			</ion-card>
+		</div>
+	</div>
 </ion-content>
