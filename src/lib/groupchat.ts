@@ -60,26 +60,24 @@ export class GroupChatService extends Request {
     localStorage.setItem(this.key + '_' + user.user.id, JSON.stringify(users));
   }
 
-  sendMessage(to, text) {
-    return this._post('/message/new', {
-      to: to,
-      text: text,
-      time: new Date()
+  sendMessage(group, text) {
+    console.log('group send', group, text);
+    return this._post('/group/message/send', {
+      group: group,
+      text: text
     });
   }
 
-  readMessage(user, ids, messages) {
-    var read = this._post('/message/read', {
-      id: ids.join(',')
-    });
+  readMessage(group, messages) {
+    var read = this._get('/group/message/list?group=' + group);
     read.subscribe(json => {
       if (!json.code) {
-        messages = messages.map(function (item) {
-          if (ids.indexOf(item.id) !== -1) {
-            item.read = true;
-          }
-          return item;
-        });
+        // messages = messages.map(function (item) {
+        //   if (ids.indexOf(item.id) !== -1) {
+        //     item.read = true;
+        //   }
+        //   return item;
+        // });
       }
     });
   }
@@ -97,9 +95,9 @@ export class GroupChatService extends Request {
     });
   }
 
-  getMessageList(user, page) {
+  getMessageList(group, page) {
     page = page > 1 ? page : 1;
-    var url = '/message/list?id=' + user.friend.id + '&page=' + page;
+    var url = '/message/list?group=' + group.id + '&page=' + page;
     return this._get(url);
   }
 }

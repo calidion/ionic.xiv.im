@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, ViewController, NavParams, Content } from 'ionic-angular';
 import * as markdown from 'showdown';
 import * as prism from 'prismjs';
-import { ChatService } from '../../lib/chat'
+import { GroupChatService } from '../../lib/groupchat'
 import * as moment from 'moment'
 
 let converter = new markdown.Converter();
@@ -38,7 +38,7 @@ export class GroupChatPage {
   newMessage = false;
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
-    public chatService: ChatService,
+    public chatService: GroupChatService,
     public navParams: NavParams) {
     this.group = navParams.get('group');
 
@@ -168,16 +168,18 @@ export class GroupChatPage {
 
   send() {
     this.newMessage = false;
-    // var observable = this.chatService.sendMessage(this.user.friend.id, this.message);
-    // this.message = '';
-    // observable.subscribe((json) => {
-    //   setTimeout(() => {
-    //     if (this.newMessage) {
-    //       this.page = 1;
-    //       this.getMessageList(true);
-    //     }
-    //   }, 1000);
-    // });
+    console.log('send group message');
+    console.log(this.group);
+    var observable = this.chatService.sendMessage(this.group.group.id, this.message);
+    this.message = '';
+    observable.subscribe((json) => {
+      setTimeout(() => {
+        if (this.newMessage) {
+          this.page = 1;
+          this.getMessageList(true);
+        }
+      }, 1000);
+    });
   }
   keyup(event) {
     console.log('inside key up');
