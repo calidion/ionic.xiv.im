@@ -1,0 +1,215 @@
+page-group-chat {
+    // @import "themes/vs";
+    // @import "themes/default";
+    // @import "themes/prism";
+    // @import "themes/prism-coy";
+    // @import "themes/prism-atom-dark";
+    // @import "themes/prism-dark";
+    // @import "themes/prism-funky";
+    // @import "themes/prism-okaidia";
+    @import "themes/prism-ghcolors";
+    // @import "themes/prism-solarizedlight";
+    // @import "themes/prism-tomorrow";
+    // @import "themes/prism-twilight";
+    ion-footer {
+        position: fixed;
+        height: 50px;
+        width: 100%;
+        background-color: #ccc;
+        bottom: 0px;
+    }
+    ion-content {
+        position: relative;
+        .scroll-content {
+            background-color: #e0e0e0;
+        }
+        .messages {
+            padding-bottom: 20px;
+        }
+        .time, .more, .nomore {
+            text-align: center;
+            margin: 5px auto;
+            p {
+                display: inline-block;
+                padding: 3px 10px;
+                margin: 0;
+                border: 1px solid #ccc;
+                background-color: #ccc;
+                color: #FFF;
+                border-radius: 4px;
+            }
+        }
+        .nomore {
+            color: #f53d3d;
+        }
+        .from,
+        .to {
+            display: flex;
+            // margin: 5px -10px;
+            .avater {
+                flex: 2 0 20%;
+                text-align: center;
+                margin: 5px 0px 0px 0px;
+                img {
+                    width: 42px;
+                    height: 42px;
+                }
+            }
+            .message {
+                flex: 7 0 70%;
+                text-align: left;
+                overflow: auto;
+                position: relative;
+                .sender {
+                    padding: 0 5px 8px 0px;
+                    color: #ccc;
+                }
+                .read {
+                    position: absolute;
+                    top: 0px;
+                    left: 12px;
+                    background-color: #AAA;
+                    color: #FEFEFE;
+                    padding: 3px;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                    font-size: 8px;
+                }
+                .document {
+                    max-width: 80%;
+                    border-radius: 10px;
+                    padding: 10px;
+                    background-color: #f4f4f4;
+                    color: #3474e1;
+                    margin: 5px;
+                    >div {
+                        user-select: text;
+                        margin: 0px;
+                        // width: 100%;
+                        >pre {
+                            border-radius: 10px;
+                        }
+                        p {
+                            margin: 0px;
+                        }
+                    }
+                }
+            }
+        }
+        .from {
+            .message {
+                .document {
+                    position: relative;
+                    display: inline-block;
+                    margin-left: 10px;
+                }
+                .document:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    width: 0;
+                    height: 0;
+                    left: -10px;
+                    border-top: 5px solid transparent;
+                    border-right: 10px solid #f8f8f8;
+                    border-bottom: 5px solid transparent;
+                    top: 8px;
+                }
+            }
+        }
+        .to {
+            .message {
+                text-align: right;
+                .document {
+                    position: relative;
+                    background-color: #6088ca;
+                    color: #FFF;
+                    text-align: right;
+                    display: inline-block;
+                    margin-right: 10px;
+                    >div {
+                        text-align: left;
+                    }
+                }
+                .document:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    width: 0;
+                    height: 0;
+                    right: -10px;
+                    border-top: 5px solid transparent;
+                    border-left: 10px solid #6088ca;
+                    border-bottom: 5px solid transparent;
+                    top: 8px;
+                }
+            }
+        }
+    }
+    .toolbar-content {
+        .toolbar {
+            padding: 4px;
+            height: 50px;
+        }
+        display: flex;
+        flex: 8;
+        .input {
+            flex: 7;
+            display: table-cell;
+            vertical-align: middle;
+            margin-top: auto;
+            textarea {
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-top: 8px;
+                width: 100%;
+            }
+        }
+        .send {
+            flex: 1;
+            text-align: center;
+            margin-top: 5px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .text-input {
+            margin-left: 3px;
+            padding: 3px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+            height: 32px;
+        }
+        [ion-button] {
+            height: 35px;
+        }
+    }
+    ion-toolbar {
+        position: fixed;
+        width: 100%;
+        // background-color: #F00;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+    // .chat-input-bar {
+    //     display: flex;
+    //     width: 100%;
+    //     .input {
+    //         flex-grow: 7;
+    //         display: table-cell;
+    //         vertical-align: middle;
+    //         input {
+    //             font-size: 20px;
+    //         }
+    //     }
+    //     .send {
+    //         flex-grow: 1;
+    //     }
+    // }
+}

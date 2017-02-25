@@ -17,7 +17,7 @@ import { UserItemGitHubPage } from '../pages/user/github/item';
 import { GroupPage } from '../pages/group/group';
 import { FriendItemPage } from '../pages/friend/item/item';
 import { ChatPage } from '../pages/chat/chat';
-// import { MessageItemPage } from '../pages/chat/message/message';
+import { GroupChatPage } from '../pages/groupChat/chat';
 
 
 // Services
@@ -26,6 +26,7 @@ import { GitHubService } from '../lib/github';
 import { ProgressService } from '../lib/ui/progresses';
 import { AlertService } from '../lib/ui/alerts';
 import { ChatService } from '../lib/chat';
+import { GroupChatService } from '../lib/groupchat';
 import { ArticleService } from '../lib/article';
 import { BreathService } from '../lib/breath';
 import { GroupService } from '../lib/group';
@@ -46,7 +47,7 @@ import { GroupService } from '../lib/group';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    // MessageItemPage,
+    GroupChatPage,
     ArticleDetailPage
   ],
   imports: [
@@ -69,7 +70,7 @@ import { GroupService } from '../lib/group';
     GroupPage,
     FriendItemPage,
     ChatPage,
-    // MessageItemPage,
+    GroupChatPage,
     ArticleDetailPage
   ],
   providers: [
@@ -80,7 +81,8 @@ import { GroupService } from '../lib/group';
     UserService, GitHubService,
     ProgressService, AlertService,
     ChatService, ArticleService,
-    BreathService, GroupService
+    BreathService, GroupService,
+    GroupChatService
   ]
 })
 export class AppModule { }

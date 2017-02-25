@@ -6,6 +6,7 @@ import { GroupService } from '../../lib/group';
 import { ProgressService } from '../../lib/ui/progresses'
 import { AlertService } from '../../lib/ui/alerts'
 import { AlertController } from 'ionic-angular';
+import { GroupChatPage } from '../groupChat/chat';
 
 
 @Component({
@@ -87,8 +88,12 @@ export class GroupPage {
     this.progressService.stop();
   }
 
-  chat() {
-    
+  chat(group) {
+    console.log(group);
+    console.log('inside group chat');
+    this.navCtrl.push(GroupChatPage, {
+      group: group
+    });
   }
 
   showCreateGroupDialog() {
