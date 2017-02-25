@@ -92,7 +92,8 @@ export class GroupPage {
     console.log(group);
     console.log('inside group chat');
     this.navCtrl.push(GroupChatPage, {
-      group: group
+      group: group,
+      user: this.user
     });
   }
 

@@ -5,11 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{group.group.name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="settingsGroup()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 

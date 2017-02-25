@@ -63,7 +63,7 @@ export class GroupChatService extends Request {
   sendMessage(group, text) {
     console.log('group send', group, text);
     return this._post('/group/message/send', {
-      group: group,
+      group: group.id,
       text: text
     });
   }
@@ -97,7 +97,7 @@ export class GroupChatService extends Request {
 
   getMessageList(group, page) {
     page = page > 1 ? page : 1;
-    var url = '/message/list?group=' + group.id + '&page=' + page;
+    var url = '/group/message/list?group=' + group.id + '&page=' + page;
     return this._get(url);
   }
 }
