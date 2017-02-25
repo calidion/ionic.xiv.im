@@ -27,4 +27,8 @@ export class GroupService extends Request {
     url += '?' + querystring.stringify(query);
     return this._get(url);
   }
+
+  create(name, desc) {
+    return this._post('/group/create', {name: name, desc: desc});
+  }
 }

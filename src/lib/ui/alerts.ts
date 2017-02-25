@@ -10,6 +10,7 @@ export class AlertService {
   ) {
 
   }
+
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

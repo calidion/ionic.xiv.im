@@ -79,6 +79,7 @@ export class HomePage {
       this.breath(this.friends);
     }
     this.progressService.stop();
+    this.type = 'friends';
     this.selected = true;
   }
 
@@ -102,6 +103,7 @@ export class HomePage {
         this.getDialogs();
       }, 100);
     }
+    this.type = 'dialogs';
     console.log(this.users);
   }
 
