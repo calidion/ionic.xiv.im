@@ -17,7 +17,8 @@ import { UserItemGitHubPage } from '../pages/user/github/item';
 import { GroupPage } from '../pages/group/group';
 import { FriendItemPage } from '../pages/friend/item/item';
 import { ChatPage } from '../pages/chat/chat';
-import { GroupChatPage } from '../pages/groupChat/chat';
+import { GroupChatPage } from '../pages/group-chat/chat';
+import { GroupSettingsPage } from '../pages/group-settings/settings';
 
 
 // Services
@@ -48,7 +49,8 @@ import { GroupService } from '../lib/group';
     FriendItemPage,
     ChatPage,
     GroupChatPage,
-    ArticleDetailPage
+    ArticleDetailPage,
+    GroupSettingsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -71,7 +73,8 @@ import { GroupService } from '../lib/group';
     FriendItemPage,
     ChatPage,
     GroupChatPage,
-    ArticleDetailPage
+    ArticleDetailPage,
+    GroupSettingsPage
   ],
   providers: [
     {

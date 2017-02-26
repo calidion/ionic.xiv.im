@@ -6,7 +6,7 @@ import { GroupService } from '../../lib/group';
 import { ProgressService } from '../../lib/ui/progresses'
 import { AlertService } from '../../lib/ui/alerts'
 import { AlertController } from 'ionic-angular';
-import { GroupChatPage } from '../groupChat/chat';
+import { GroupChatPage } from '../group-chat/chat';
 
 
 @Component({

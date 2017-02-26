@@ -5,15 +5,19 @@ import * as prism from 'prismjs';
 import { GroupChatService } from '../../lib/groupchat'
 import * as moment from 'moment'
 
+import { GroupSettingsPage } from '../group-settings/settings';
+
 let converter = new markdown.Converter();
 
 moment.locale('zh-CN');
 
 /*
+
   Generated class for the Chat page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
+
 */
 
 @Component({
@@ -181,6 +185,13 @@ export class GroupChatPage {
 
   more() {
     this.getMessageList(false);
+  }
+
+  settingsGroup(group) {
+    this.navCtrl.push(GroupSettingsPage, {
+      group: group,
+      user: this.user
+    });
   }
 }
 

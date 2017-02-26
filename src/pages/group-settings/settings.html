@@ -1,0 +1,55 @@
+<!--
+  Generated template for the User page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>群设置</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class='black' *ngIf="user">
+  <ion-list no-lines class="black group-info">
+    <ion-item>群名称<span>{{group.name}}</span></ion-item>
+    <ion-item>群公告<span>{{group.desc}}</span></ion-item>
+  </ion-list>
+
+  <ion-list no-lines class="top black">
+    <ion-item>
+      <ion-toggle checked="false"></ion-toggle>
+      <ion-label>
+        消息免打扰
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <div class="members" item-left>
+        <span><img src="img/avatar-cher.png"></span>
+        <span><img src="img/avatar-cher.png"></span>
+        <span class="add"><ion-icon name="add"></ion-icon>
+</span>
+        <span class="remove"><ion-icon name="remove"></ion-icon>
+</span>
+      </div>
+    </ion-item>
+    <!--<button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="primary" name="settings" item-left></ion-icon>
+      
+    </button>
+    <button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="danger" name="exit" item-left></ion-icon>
+      解散
+    </button>-->
+    <!--<button ion-item (click)="goToSettingsPage()">
+      <ion-icon color="danger" name="exit" item-left></ion-icon>
+      退出群组
+    </button>-->
+  </ion-list>
+  <p>
+    <button ion-button color="danger" block>退出</button>
+  </p>
+</ion-content>

@@ -1,0 +1,61 @@
+group-settings {
+    .black {
+        background-color: #eee;
+    }
+    .top {
+        padding-top: 32px;
+        margin: 0;
+    }
+    .img-loaded+ion-spinner {
+        display: none;
+    }
+    p {
+        padding: 10 20px;
+    }
+    .group-info {
+        ion-item {
+            span {
+                text-align: right;
+                display: block;
+                width: 100px;
+                float: right;
+                color: #aaa;
+            }
+        }
+    }
+    .members {
+        span {
+            display: inline-block;
+            vertical-align: top;
+            img {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 1px solid #ccc;
+            }
+        }
+        span.add,
+        span.remove {
+            ion-icon {
+                height: 50px;
+                display: inline-block;
+                width: 50px;
+                font-size: 50px;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                line-height: 50%;
+                text-align: center;
+                color: #ccc;
+            }
+        }
+    }
+    ion-thumbnail {
+        position: relative;
+        ion-spinner.abs {
+            display: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
