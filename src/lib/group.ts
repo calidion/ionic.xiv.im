@@ -29,6 +29,10 @@ export class GroupService extends Request {
   }
 
   create(name, desc) {
-    return this._post('/group/create', {name: name, desc: desc});
+    return this._post('/group/create', { name: name, desc: desc });
+  }
+  invite(group, email) {
+    return this._post('/group/member/invite', { group: group, email: email});
+
   }
 }

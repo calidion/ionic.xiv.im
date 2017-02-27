@@ -14,7 +14,8 @@
 
 
 <ion-content class='black' *ngIf="user">
-  <ion-list no-lines class="black group-info">
+  <div class="scroll">
+  <ion-list no-lines class="black top group-info">
     <ion-item>群名称<span>{{group.name}}</span></ion-item>
     <ion-item>群公告<span>{{group.desc}}</span></ion-item>
   </ion-list>
@@ -26,11 +27,16 @@
         消息免打扰
       </ion-label>
     </ion-item>
+  </ion-list>
+
+  <ion-list no-lines class="top black">
     <ion-item>
-      <div class="members" item-left>
-        <span><img src="img/avatar-cher.png"></span>
-        <span><img src="img/avatar-cher.png"></span>
-        <span class="add"><ion-icon name="add"></ion-icon>
+      群成员
+      <hr/>
+      <div class="members">
+        <span><img src="./assets/images/icon.png"></span>
+        <span><img src="./assets/images/icon.png"></span>
+        <span class="add" (click)="goToInviteUser()"><ion-icon name="add"></ion-icon>
 </span>
         <span class="remove"><ion-icon name="remove"></ion-icon>
 </span>
@@ -52,4 +58,5 @@
   <p>
     <button ion-button color="danger" block>退出</button>
   </p>
+  </div>
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../lib/user'
 import { AboutPage } from '../about/about';
+import { GroupInvitePage } from '../group-invite/group-invite';
 
 /*
   Generated class for the User page.
@@ -18,9 +19,9 @@ export class GroupSettingsPage {
   user: JSON
   group
   constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
-    this.user = navParams.get('user') 
-    this.group = navParams.get('group') 
-    
+    this.user = navParams.get('user')
+    this.group = navParams.get('group')
+
     if (!this.user) {
       this.user = userService.get();
     }
@@ -41,6 +42,12 @@ export class GroupSettingsPage {
   }
 
   goToAboutPage() {
-     this.navCtrl.push(AboutPage);   
+    this.navCtrl.push(AboutPage);
+  }
+  goToInviteUser() {
+    this.navCtrl.push(GroupInvitePage, {
+      user: this.user,
+      group: this.group
+    });
   }
 }

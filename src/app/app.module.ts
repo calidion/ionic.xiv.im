@@ -19,6 +19,7 @@ import { FriendItemPage } from '../pages/friend/item/item';
 import { ChatPage } from '../pages/chat/chat';
 import { GroupChatPage } from '../pages/group-chat/chat';
 import { GroupSettingsPage } from '../pages/group-settings/settings';
+import { GroupInvitePage } from '../pages/group-invite/group-invite';
 
 
 // Services
@@ -50,7 +51,8 @@ import { GroupService } from '../lib/group';
     ChatPage,
     GroupChatPage,
     ArticleDetailPage,
-    GroupSettingsPage
+    GroupSettingsPage,
+    GroupInvitePage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -74,7 +76,8 @@ import { GroupService } from '../lib/group';
     ChatPage,
     GroupChatPage,
     ArticleDetailPage,
-    GroupSettingsPage
+    GroupSettingsPage,
+    GroupInvitePage
   ],
   providers: [
     {

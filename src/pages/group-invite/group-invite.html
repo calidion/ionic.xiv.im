@@ -1,0 +1,22 @@
+<!--
+  Generated template for the GroupInvite page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>邀请群成员</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar animated="true" [(ngModel)]="email" (search)="getEmail($event)" type="email" placeholder="请输入好友邮箱"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button (click)="invite()">邀请</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+</ion-content>
