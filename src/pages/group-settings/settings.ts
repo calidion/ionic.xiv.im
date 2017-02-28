@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../lib/user'
 import { AboutPage } from '../about/about';
 import { GroupInvitePage } from '../group-invite/group-invite';
+import { MembersPage } from '../members/members';
 import { GroupService } from '../../lib/group';
 
 
@@ -51,6 +52,13 @@ export class GroupSettingsPage {
 
   ionViewDidLoad() {
     console.log('Hello UserPage Page');
+  }
+
+  goToMembers() {
+    this.navCtrl.push(MembersPage, {
+      user: this.user,
+      group: this.group
+    });
   }
   goToDetailsPage() {
 
