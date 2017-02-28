@@ -15,34 +15,38 @@
 
 <ion-content class='black' *ngIf="user">
   <div class="scroll">
-  <ion-list no-lines class="black top group-info">
-    <ion-item>群名称<span>{{group.name}}</span></ion-item>
-    <ion-item>群公告<span>{{group.desc}}</span></ion-item>
-  </ion-list>
+    <ion-list no-lines class="black top group-info">
+      <ion-item>群名称<span>{{group.name}}</span></ion-item>
+      <ion-item>群公告<span>{{group.desc}}</span></ion-item>
+    </ion-list>
 
-  <ion-list no-lines class="top black">
-    <ion-item>
-      <ion-toggle checked="false"></ion-toggle>
-      <ion-label>
-        消息免打扰
-      </ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-list no-lines class="top black">
+      <ion-item>
+        <ion-toggle checked="false"></ion-toggle>
+        <ion-label>
+          消息免打扰
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
-  <ion-list no-lines class="top black">
-    <ion-item>
-      群成员
-      <hr/>
-      <div class="members">
-        <span><img src="./assets/images/icon.png"></span>
-        <span><img src="./assets/images/icon.png"></span>
-        <span class="add" (click)="goToInviteUser()"><ion-icon name="add"></ion-icon>
+    <ion-list no-lines class="top black">
+      <ion-item>
+        群成员
+      </ion-item>
+      <ion-item>
+        <div class="members">
+          <span *ngFor="let member of members; let i = index"><img
+           *ngIf="i < 3" src="{{member.member.avatar}}" alt="{{member.username}}"
+           ></span>
+          <span class="add" (click)="goToInviteUser()"><ion-icon name="add"></ion-icon>
 </span>
-        <span class="remove"><ion-icon name="remove"></ion-icon>
+          <span class="remove"><ion-icon name="remove"></ion-icon>
 </span>
-      </div>
-    </ion-item>
-    <!--<button ion-item (click)="goToSettingsPage()">
+        </div>
+        <button ion-button clear item-right (click)="goToMembers">&gt;&gt;</button>
+
+      </ion-item>
+      <!--<button ion-item (click)="goToSettingsPage()">
       <ion-icon color="primary" name="settings" item-left></ion-icon>
       
     </button>
@@ -50,13 +54,13 @@
       <ion-icon color="danger" name="exit" item-left></ion-icon>
       解散
     </button>-->
-    <!--<button ion-item (click)="goToSettingsPage()">
+      <!--<button ion-item (click)="goToSettingsPage()">
       <ion-icon color="danger" name="exit" item-left></ion-icon>
       退出群组
     </button>-->
-  </ion-list>
-  <p>
-    <button ion-button color="danger" block>退出</button>
-  </p>
+    </ion-list>
+    <p>
+      <button ion-button color="danger" block>退出</button>
+    </p>
   </div>
 </ion-content>

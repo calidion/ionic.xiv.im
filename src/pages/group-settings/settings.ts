@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../lib/user'
 import { AboutPage } from '../about/about';
 import { GroupInvitePage } from '../group-invite/group-invite';
+import { GroupService } from '../../lib/group';
+
 
 /*
   Generated class for the User page.
@@ -18,7 +20,14 @@ import { GroupInvitePage } from '../group-invite/group-invite';
 export class GroupSettingsPage {
   user: JSON
   group
-  constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
+  page = 1
+  members
+  constructor(
+    public navCtrl: NavController,
+    navParams: NavParams,
+    userService: UserService,
+    public groupService: GroupService
+  ) {
     this.user = navParams.get('user')
     this.group = navParams.get('group')
 
@@ -26,6 +35,18 @@ export class GroupSettingsPage {
       this.user = userService.get();
     }
     console.log(this.user);
+    var members = this.groupService.members(this.group, this.page++);
+    members.subscribe(json => {
+      if (json.code === 0) {
+        this.onMembers(json.data);
+      }
+    });
+  }
+  onMembers(data) {
+    console.log('get members');
+    console.log(data);
+    this.members = data.members.results;
+    console.log(this.members);
   }
 
   ionViewDidLoad() {
@@ -40,6 +61,7 @@ export class GroupSettingsPage {
   goToSettingsPage() {
 
   }
+
 
   goToAboutPage() {
     this.navCtrl.push(AboutPage);
