@@ -18,7 +18,7 @@ export class TabsPage {
   // should be each tab's root Page
   chat: any = HomePage;
   group: any = GroupPage;
-  article: any = ArticlePage;
+  question: any = ArticlePage;
   user: any = UserPage;
   count = 0;
   friends = [];
