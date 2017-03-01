@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { GroupService } from '../../lib/group';
 
 /*
   Generated class for the Members page.
@@ -14,9 +15,25 @@ import { NavController, NavParams } from 'ionic-angular';
 export class MembersPage {
   user
   group
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // this.user = navParams.get('user')
-    // this.group = navParams.get('group')
+  members
+  page = 1
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public groupService: GroupService
+  ) {
+    this.user = navParams.get('user')
+    this.group = navParams.get('group')
+    var members = this.groupService.members(this.group, this.page++);
+    members.subscribe(json => {
+      if (json.code === 0) {
+        this.onMembers(json.data);
+      }
+    });
+  }
+  onMembers(data) {
+    console.log('get members');
+    console.log(data);
+    this.members = data.members.results;
+    console.log(this.members);
   }
 
   ionViewDidLoad() {

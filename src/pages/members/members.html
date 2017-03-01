@@ -14,5 +14,12 @@
 
 
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item no-lines *ngFor="let member of members">
+      <ion-avatar item-left>
+        <img src="{{member.member.avatar}}">
+      </ion-avatar>
+      <h2>{{member.member.username}}</h2>  
+      </button>
+  </ion-list>
 </ion-content>
