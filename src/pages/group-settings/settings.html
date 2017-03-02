@@ -36,7 +36,7 @@
       <ion-item>
         <div class="members">
           <span *ngFor="let member of members; let i = index"><img
-           *ngIf="i < 3" src="{{member.member.avatar}}" alt="{{member.username}}"
+           *ngIf="i < 2" src="{{member.member.avatar}}" alt="{{member.username}}"
            ></span>
           <span class="add" (click)="goToInviteUser()"><ion-icon name="add"></ion-icon>
 </span>

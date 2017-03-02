@@ -68,7 +68,9 @@ export class GroupPage {
 
   createGroup() {
     this.showCreateGroupDialog().then(data => {
-      this.create(data['name'], data['desc']);
+      if (data['name']) {
+        this.create(data['name'], data['desc']);
+      }
     });
   }
 
