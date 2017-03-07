@@ -38,15 +38,21 @@ export class Request {
     });
   }
 
-  static setUrl(host) {
-    localStorage.setItem('url', 'http://' + host);
-    localStorage.setItem('url-socket.io', 'ws://' + host);
+  static setUrl(host, ssl = false) {
+    if (ssl) {
+      localStorage.setItem('url', 'https://' + host);
+      localStorage.setItem('url-socket.io', 'wss://' + host);
+    } else {
+      localStorage.setItem('url', 'http://' + host);
+      localStorage.setItem('url-socket.io', 'ws://' + host);
+    }
+
     Request.initUrl();
   }
 
   static initUrl() {
-    var host = 'forum.webfullstack.me';
-    // var host = 'server.xiv.im';
+    // var host = 'forum.webfullstack.me';
+    var host = 'server.xiv.im';
     Request.url = localStorage.getItem('url') || 'http://' + host;
     Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'ws://' + host;
   }

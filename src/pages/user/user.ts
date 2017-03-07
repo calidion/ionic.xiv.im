@@ -50,8 +50,13 @@ export class UserPage {
     this.navCtrl.push(AboutPage);
   }
   onServerChange() {
-    console.log(this.server);
-    Request.setUrl(this.server);
+    var ssl = false;
+    switch (this.server) {
+      case 'server.xiv.im':
+        ssl = true;
+        break;
+    }
+    Request.setUrl(this.server, ssl);
     location.reload();
   }
 }
