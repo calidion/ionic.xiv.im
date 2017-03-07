@@ -24,7 +24,7 @@ export class UserService extends Request {
   }
 
   auth() {
-    var url = Request.url + '/auth/github';
+    var url = Request.url + '/oauth/github/login';
     var authUrl = url + '?url=' + encodeURIComponent(location.href);
     window.location.href = authUrl;
   }

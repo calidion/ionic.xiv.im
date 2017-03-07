@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../lib/user'
+import { Request } from '../../lib/request'
 import { UserDetailsPage } from './details'
 import { UserPasswordResetPage } from './password/reset';
 import { AboutPage } from '../about/about';
@@ -13,15 +14,15 @@ import { AboutPage } from '../about/about';
 */
 @Component({
   selector: 'page-user',
-  templateUrl: 'user.html',
-
+  templateUrl: 'user.html'
 })
 
 export class UserPage {
   user: JSON
+  server
   constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
-    this.user = navParams.get('user') 
-    
+    this.user = navParams.get('user')
+
     if (!this.user) {
       this.user = userService.get();
     }
@@ -46,6 +47,11 @@ export class UserPage {
   }
 
   goToAboutPage() {
-     this.navCtrl.push(AboutPage);   
+    this.navCtrl.push(AboutPage);
+  }
+  onServerChange() {
+    console.log(this.server);
+    Request.setUrl(this.server);
+    location.reload();
   }
 }

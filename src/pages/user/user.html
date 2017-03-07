@@ -28,15 +28,15 @@
 
   <ion-list no-lines class="top black">
     <button ion-item (click)="goToSettingsPage()">
-      <ion-icon color="secondary" name="contact" item-left></ion-icon>
+      <ion-icon color="primary" name="contact" item-left></ion-icon>
       我的关注
     </button>
     <button ion-item (click)="goToSettingsPage()">
-      <ion-icon color="primary"name="contacts" item-left></ion-icon>
+      <ion-icon color="secondary"name="contacts" item-left></ion-icon>
       我的好友
     </button>
     <button ion-item (click)="goToSettingsPage()">
-      <ion-icon color="primary" name="paper" item-left></ion-icon>
+      <ion-icon color="dark" name="paper" item-left></ion-icon>
       我的文章
     </button>
   </ion-list>
@@ -46,6 +46,16 @@
       <ion-icon color="primary" name="settings" item-left></ion-icon>
       设置
     </button>
+    <ion-item>
+      <ion-icon color="secondary" name="globe" item-left></ion-icon>
+      <ion-label>服务器</ion-label>
+
+      <ion-select [(ngModel)]="server" okText="确定" cancelText="取消" (ionChange)="onServerChange()">
+        <ion-option value="forum.webfullstack.me">美国</ion-option>
+        <ion-option value="server.xiv.im">新加坡</ion-option>
+        <ion-option value="xiv.t1bao.com">中国(尚未开通)</ion-option>
+      </ion-select>
+    </ion-item>
     <button ion-item (click)="goToSettingsPage()">
       <ion-icon color="danger" name="exit" item-left></ion-icon>
       退出

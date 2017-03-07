@@ -12,8 +12,8 @@ export class Request {
   static socket
   cbs = []
   observable
-  protected static url: string = 'http://forum.webfullstack.me';
-  protected static urlSocketIO: string = 'ws://forum.webfullstack.me';
+  protected static url: string;
+  protected static urlSocketIO: string;
   _get(url) {
     let options = new RequestOptions({ withCredentials: true });
     return this.http.get(Request.url + url, options)
@@ -26,20 +26,37 @@ export class Request {
       .map((res: Response) => res.json())
       .catch(this.onError);
   }
+
   constructor(protected http: Http) {
-    if (!Request.socket) {
-      Request.initSocketIO();
-    }
+    Request.initUrl();
+    Request.initSocketIO();
     this.observable = Observable.fromEvent(Request.socket, 'message');
     this.observable.subscribe((json) => {
-      for(let i = 0; this.cbs.length > i; i++) {
+      for (let i = 0; this.cbs.length > i; i++) {
         this.cbs[i](json);
       }
     });
   }
 
+  static setUrl(host) {
+    localStorage.setItem('url', 'http://' + host);
+    localStorage.setItem('url-socket.io', 'ws://' + host);
+    Request.initUrl();
+  }
+
+  static initUrl() {
+    var host = 'forum.webfullstack.me';
+    // var host = 'server.xiv.im';
+    Request.url = localStorage.getItem('url') || 'http://' + host;
+    Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'ws://' + host;
+  }
+
+
+
   static initSocketIO() {
-    Request.socket = io(Request.urlSocketIO);
+    if (!Request.socket) {
+      Request.socket = io(Request.urlSocketIO);
+    }
   }
 
   subscribeMessage(cb) {

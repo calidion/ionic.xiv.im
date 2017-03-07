@@ -46,7 +46,7 @@ export class GroupSettingsPage {
   onMembers(data) {
     console.log('get members');
     console.log(data);
-    this.members = data.members.results;
+    this.members = data.members.results || data.members;
     console.log(this.members);
   }
 
