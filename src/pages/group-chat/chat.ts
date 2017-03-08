@@ -99,6 +99,10 @@ export class GroupChatPage {
         var lastTime = null;
 
         messages = this.messages.concat(messages);
+        messages = messages.map(function (item) {
+          item.createdAt = new Date(item.createdAt).getTime();
+          return item;
+        });
         messages = messages.sort(function (a, b) {
           return a.createdAt - b.createdAt;
         });

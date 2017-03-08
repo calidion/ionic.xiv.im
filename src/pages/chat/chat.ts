@@ -97,6 +97,10 @@ export class ChatPage {
         var lastTime = null;
 
         messages = this.messages.concat(messages);
+        messages = messages.map(function (item) {
+          item.createdAt = new Date(item.createdAt).getTime();
+          return item;
+        });
         messages = messages.sort(function (a, b) {
           return a.createdAt - b.createdAt;
         });
@@ -133,7 +137,7 @@ export class ChatPage {
     }
     this.chatService.addUser(this.user, message);
   }
-  
+
   setCSS(selector, key, value) {
     let domElement = document.querySelectorAll(selector);
     if (domElement !== null) {
