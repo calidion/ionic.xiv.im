@@ -61,7 +61,7 @@ export class Request {
 
   static initSocketIO() {
     if (!Request.socket) {
-      Request.socket = io(Request.urlSocketIO);
+      // Request.socket = io(Request.urlSocketIO);
     }
   }
 
