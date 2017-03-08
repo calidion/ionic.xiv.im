@@ -51,8 +51,8 @@ export class Request {
   }
 
   static initUrl() {
-    // var host = 'forum.webfullstack.me';
-    var host = 'server.xiv.im';
+    var host = 'forum.webfullstack.me';
+    // var host = 'server.xiv.im';
     Request.url = localStorage.getItem('url') || 'http://' + host;
     Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'ws://' + host;
   }
