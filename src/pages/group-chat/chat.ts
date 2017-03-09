@@ -40,12 +40,17 @@ export class GroupChatPage {
   lastTime = null
   newMessage = false;
   user
+  // 最后消息活动时间
+  sending = false
+  failed = false
+  sendingMessage = ''
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
     public chatService: GroupChatService,
     public navParams: NavParams) {
     this.group = navParams.get('group');
     this.user = navParams.get('user');
+    console.log(this.user);
 
     var timer = null;
 
@@ -96,8 +101,6 @@ export class GroupChatPage {
           this.end = false;
         }
 
-        var lastTime = null;
-
         messages = this.messages.concat(messages);
         messages = messages.map(function (item) {
           item.createdAt = new Date(item.createdAt).getTime();
@@ -107,20 +110,43 @@ export class GroupChatPage {
           return a.createdAt - b.createdAt;
         });
         messages = messages.map(function (item) {
-          item.timeText = moment(item.createdAt).format('LL[ ]LT');
-          item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
-          item.html = converter.makeHtml(item.text);
-          this.onMessage(item);
-          if (!lastTime || (item.createdAt - lastTime) > GroupChatService.MIN_MINUTES) {
-            item.timed = true;
-          }
-          lastTime = item.createdAt;
-          return item;
+          return this.updateItem(item);
+          // item.timeText = moment(item.createdAt).format('LL[ ]LT');
+          // item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+          // item.html = converter.makeHtml(item.text);
+          // this.onMessage(item);
+          // if (!lastTime || (item.createdAt - lastTime) > GroupChatService.MIN_MINUTES) {
+          //   item.timed = true;
+          // }
+          // lastTime = item.createdAt;
+          // return item;
         }.bind(this));
         this.messages = messages;
         this.updateMessage(scroll);
       }
     });
+  }
+
+  updateItem(item) {
+    item.timeText = moment(item.createdAt).format('LL[ ]LT');
+    item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+    item.html = converter.makeHtml(item.text);
+    this.onMessage(item);
+    if (!this.lastTime || (item.createdAt - this.lastTime) > GroupChatService.MIN_MINUTES) {
+      item.timed = true;
+    }
+    this.lastTime = item.createdAt;
+    return item;
+  }
+
+  toBottom() {
+    setTimeout(function () {
+      if (this.content && this.content.scrollToBottom) {
+        if (this.content.scrollToBottom instanceof Function) {
+          this.content.scrollToBottom();
+        }
+      }
+    }.bind(this), 1);
   }
 
   onMessage(message) {
@@ -165,20 +191,42 @@ export class GroupChatPage {
 
   }
 
-  send() {
+  send(sendingMessage = '') {
+    this.message = sendingMessage || this.message;
+
+    this.sending = true;
+    this.failed = false;
     this.newMessage = false;
-    console.log('send group message');
-    console.log(this.group);
     var observable = this.chatService.sendMessage(this.group.group, this.message);
+    this.sendingMessage = this.message;
+    this.toBottom();
     this.message = '';
     observable.subscribe((json) => {
-      setTimeout(() => {
-        if (this.newMessage) {
-          this.page = 1;
-          this.getMessageList(true);
-        }
-      }, 1000);
+      this.sending = false;
+      if (json.code) {
+        this.failed = true;
+        return;
+      }
+      var message = json.data;
+      message = this.updateItem(message);
+
+      this.messages.push(message);
+      this.updateMessage(true);
     });
+
+    // this.newMessage = false;
+    // console.log('send group message');
+    // console.log(this.group);
+    // var observable = this.chatService.sendMessage(this.group.group, this.message);
+    // this.message = '';
+    // observable.subscribe((json) => {
+    //   setTimeout(() => {
+    //     if (this.newMessage) {
+    //       this.page = 1;
+    //       this.getMessageList(true);
+    //     }
+    //   }, 1000);
+    // });
   }
 
   keyup(event) {

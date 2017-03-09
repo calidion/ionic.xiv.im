@@ -63,7 +63,7 @@ export class GroupChatService extends Request {
   sendMessage(group, text) {
     console.log('group send', group, text);
     return this._post('/group/message/send', {
-      group: group.id,
+      group: String(group.id),
       text: text
     });
   }
@@ -84,7 +84,7 @@ export class GroupChatService extends Request {
 
   removeMessage(user, message, messages) {
     var read = this._post('/message/remove', {
-      id: message.id
+      id: String(message.id)
     });
     read.subscribe(json => {
       if (!json.code) {

@@ -26,7 +26,9 @@ page-chat {
         .messages {
             padding-bottom: 20px;
         }
-        .time, .more, .nomore {
+        .time,
+        .more,
+        .nomore {
             text-align: center;
             margin: 5px auto;
             p {
@@ -60,6 +62,7 @@ page-chat {
                 text-align: left;
                 overflow: auto;
                 position: relative;
+                vertical-align: middle;
                 .sender {
                     padding: 0 5px 8px 0px;
                     color: #ccc;
@@ -122,6 +125,15 @@ page-chat {
         .to {
             .message {
                 text-align: right;
+                ion-spinner {
+                    top: 10px;
+                }
+                ion-icon:before {
+                    position: relative;
+                    font-size: 30px;
+                    top: 8px;
+
+                }
                 .document {
                     position: relative;
                     background-color: #6088ca;

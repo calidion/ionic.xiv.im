@@ -28,6 +28,10 @@ export class ChatService extends Request {
     return this.getUsers(user);
   }
 
+  addRecentFriend(friend, message) {
+    this.addUser(friend, message);
+  }
+
   addUser(user, message) {
     console.log(message);
     if (!user) {
@@ -62,7 +66,7 @@ export class ChatService extends Request {
 
   sendMessage(to, text) {
     return this._post('/message/new', {
-      to: to,
+      to: String(to),
       text: text,
       time: new Date()
     });
@@ -86,7 +90,7 @@ export class ChatService extends Request {
 
   removeMessage(user, message, messages) {
     var read = this._post('/message/remove', {
-      id: message.id
+      id: String(message.id)
     });
     read.subscribe(json => {
       if (!json.code) {

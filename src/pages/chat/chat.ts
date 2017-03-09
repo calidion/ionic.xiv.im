@@ -32,10 +32,15 @@ export class ChatPage {
   user
   message
   messages = []
+  // 是否消息结尾
   end = false
   fetched = false
+  // 最后消息活动时间
   lastTime = null
   newMessage = false;
+  sending = false
+  failed = false
+  sendingMessage = ''
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
     public chatService: ChatService,
@@ -94,7 +99,6 @@ export class ChatPage {
         }
         var ids = [];
 
-        var lastTime = null;
 
         messages = this.messages.concat(messages);
         messages = messages.map(function (item) {
@@ -108,15 +112,16 @@ export class ChatPage {
           if (!item.read) {
             ids.push(item.id);
           }
-          item.timeText = moment(item.createdAt).format('LL[ ]LT');
-          item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
-          item.html = converter.makeHtml(item.text);
-          this.onMessage(item);
-          if (!lastTime || (item.createdAt - lastTime) > ChatService.MIN_MINUTES) {
-            item.timed = true;
-          }
-          lastTime = item.createdAt;
-          return item;
+          return this.updateItem(item);
+          // item.timeText = moment(item.createdAt).format('LL[ ]LT');
+          // item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+          // item.html = converter.makeHtml(item.text);
+          // this.onMessage(item);
+          // if (!this.lastTime || (item.createdAt - this.lastTime) > ChatService.MIN_MINUTES) {
+          //   item.timed = true;
+          // }
+          // this.lastTime = item.createdAt;
+          // return item;
         }.bind(this));
 
 
@@ -127,13 +132,30 @@ export class ChatPage {
     });
   }
 
+  updateItem(item) {
+    item.timeText = moment(item.createdAt).format('LL[ ]LT');
+    item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+    item.html = converter.makeHtml(item.text);
+    this.onMessage(item);
+    if (!this.lastTime || (item.createdAt - this.lastTime) > ChatService.MIN_MINUTES) {
+      item.timed = true;
+    }
+    this.lastTime = item.createdAt;
+    return item;
+  }
+
+  addToQueue() {
+
+  }
+
   onMessage(message) {
+    if (!message) {
+      return;
+    }
     if (message.receiver.id === this.user.friend.id) {
       message.type = 'to';
     } else if (message.sender.id === this.user.friend.id) {
       message.type = 'from';
-    } else {
-      return;
     }
     this.chatService.addUser(this.user, message);
   }
@@ -170,17 +192,36 @@ export class ChatPage {
 
   }
 
-  send() {
+  toBottom() {
+    setTimeout(function () {
+      if (this.content && this.content.scrollToBottom) {
+        if (this.content.scrollToBottom instanceof Function) {
+          this.content.scrollToBottom();
+        }
+      }
+    }.bind(this), 1);
+  }
+
+  send(sendingMessage = '') {
+    this.message = sendingMessage || this.message;
+    this.sending = true;
+    this.failed = false;
     this.newMessage = false;
     var observable = this.chatService.sendMessage(this.user.friend.id, this.message);
+    this.sendingMessage = this.message;
+    this.toBottom();
     this.message = '';
     observable.subscribe((json) => {
-      setTimeout(() => {
-        if (this.newMessage) {
-          this.page = 1;
-          this.getMessageList(true);
-        }
-      }, 1000);
+      this.sending = false;
+      if (json.code) {
+        this.failed = true;
+        return;
+      }
+      var message = json.data;
+      message = this.updateItem(message);
+
+      this.messages.push(message);
+      this.updateMessage(true);
     });
   }
   keyup(event) {

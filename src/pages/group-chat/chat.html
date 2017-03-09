@@ -55,17 +55,19 @@
         </div>
       </div>
     </div>
-    <div *ngIf="sending">
-      <div class="to" *ngIf="message.type === 'to'">
+    <div *ngIf="sending || failed">
+      <div class="to">
         <div class="message">
-          <div class="document">
-            <div innerHTML="{{message.html}}"></div>
+          <ion-icon name="alert" color="danger" *ngIf="failed" (click)="send(sendingMessage)"></ion-icon>
+          <ion-spinner *ngIf="sending"></ion-spinner>
+          <div class="document sending">
+            <div innerHTML="{{sendingMessage}}">正在发送...</div>
           </div>
           <!--<div class="read" *ngIf="message.read">已读</div>
           <div class="read" *ngIf="!message.read">已发送<br/>{{message.timeStatus}}</div>-->
         </div>
         <div class="avater">
-          <img src="{{message.sender.avatar}}" />
+          <img src="{{user.avatar}}" />
         </div>
       </div>
     </div>
