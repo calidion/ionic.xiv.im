@@ -47,19 +47,26 @@
 
 		<div *ngSwitchCase="'groups'" class="friends">
 			<div *ngIf="selected && groups && groups.length" class="dialogs">
-				<ion-list class="chatboxes" *ngFor="let group of groups">
-					<ion-item (click)="chat(group)">
-						<ion-avatar item-left>
-							<img src="{{group.group.avatar || './assets/images/icon.png'}}">
-						</ion-avatar>
-						<h2>{{group.group.name}}</h2>
-						<p>{{group.group.desc}}</p>
-						<ion-note item-right></ion-note>
-						<ion-badge item-right color="danger" *ngIf="counts && counts[group.group.id]"></ion-badge>
-					</ion-item>
+				<ion-list *ngFor="let group of groups">
+					<ion-item-sliding>
+						<ion-item (click)="chat(group)">
+							<ion-avatar item-left>
+								<img src="{{group.group.avatar || './assets/images/icon.png'}}">
+							</ion-avatar>
+							<h2>{{group.group.name}}</h2>
+							<p>{{group.group.desc}}</p>
+							<ion-badge item-right color="danger" *ngIf="counts && counts[group.group.id]">{{counts[group.group.id]}}</ion-badge>
+						</ion-item>
+						<ion-item-options side="right">
+							<button ion-button color="danger" (click)="remove(group)">
+        <ion-icon name="remove-circle"></ion-icon>
+        删除
+      </button>
+						</ion-item-options>
+					</ion-item-sliding>
 				</ion-list>
 			</div>
-			<ion-card *ngIf="selected && (!groups || !groups.length)">
+			<ion-card *ngIf="selected && (!groups || !groups.length) ">
 
 				<ion-card-header>
 					你还没有创建或者加入群组哦！
@@ -67,8 +74,8 @@
 
 				<ion-card-content>
 					<p>马上创建群组？</p>
-					<button ion-button color="danger" (click)="createGroup()">
-        <ion-icon name="add-circle"></ion-icon>
+					<button ion-button color="danger " (click)="createGroup() ">
+        <ion-icon name="add-circle "></ion-icon>
         创建
       </button>
 

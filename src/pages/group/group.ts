@@ -47,9 +47,8 @@ export class GroupPage {
   getRecent() {
 
   }
-  getGroups() {
-    console.log('inside get friends');
-    if (!this.groups) {
+  getGroups(forceRetrieve = false) {
+    if (!this.groups || forceRetrieve) {
       var observable = this.groupService.list();
       this.progressService.show('正在获取群组信息...');
       observable.subscribe(this.onGroup.bind(this));
@@ -83,7 +82,7 @@ export class GroupPage {
     console.log(json);
     if (json.code === 0) {
       this.alertService.timed('成功！', '群组创建成功!', 500);
-      this.getGroups();
+      this.getGroups(true);
     } else {
       this.alertService.timed('失败！', '群组创建失败，请确保网络正常! 错误原因: ' + json.message, 500);
     }
