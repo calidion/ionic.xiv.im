@@ -49,8 +49,6 @@ export class ChatPage {
 
     // From Socket.IO
     this.chatService.subscribeMessage(message => {
-      console.log('inside receiver message');
-      console.log(message);
       this.messages = this.messages.concat(message);
       this.updateFullMessage(this.messages, true);
     });
