@@ -47,19 +47,12 @@ export class ChatPage {
     public navParams: NavParams) {
     this.user = navParams.get('user');
 
-    var timer = null;
-
     // From Socket.IO
     this.chatService.subscribeMessage(message => {
-      this.newMessage = true;
-      if (timer) {
-        return;
-      }
-      timer = setTimeout(() => {
-        // this.messages = this.chatService.getMessages(this.user);
-        this.updateMessage(true);
-        timer = null;
-      }, 1000);
+      console.log('inside receiver message');
+      console.log(message);
+      this.messages = this.messages.concat(message);
+      this.updateFullMessage(this.messages, true);
     });
 
     this.getMessageList(true);
@@ -97,39 +90,59 @@ export class ChatPage {
         } else {
           this.end = false;
         }
-        var ids = [];
-
-
+        // var ids = [];
         messages = this.messages.concat(messages);
-        messages = messages.map(function (item) {
-          item.createdAt = new Date(item.createdAt).getTime();
-          return item;
-        });
-        messages = messages.sort(function (a, b) {
-          return a.createdAt - b.createdAt;
-        });
-        messages = messages.map(function (item) {
-          if (!item.read) {
-            ids.push(item.id);
-          }
-          return this.updateItem(item);
-          // item.timeText = moment(item.createdAt).format('LL[ ]LT');
-          // item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
-          // item.html = converter.makeHtml(item.text);
-          // this.onMessage(item);
-          // if (!this.lastTime || (item.createdAt - this.lastTime) > ChatService.MIN_MINUTES) {
-          //   item.timed = true;
-          // }
-          // this.lastTime = item.createdAt;
-          // return item;
-        }.bind(this));
+        this.updateFullMessage(messages, scroll);
+
+        // messages = messages.map(function (item) {
+        //   item.createdAt = new Date(item.createdAt).getTime();
+        //   return item;
+        // });
+        // messages = messages.sort(function (a, b) {
+        //   return a.createdAt - b.createdAt;
+        // });
+        // messages = messages.map(function (item) {
+        //   if (!item.read) {
+        //     ids.push(item.id);
+        //   }
+        //   return this.updateItem(item);
+        //   // item.timeText = moment(item.createdAt).format('LL[ ]LT');
+        //   // item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
+        //   // item.html = converter.makeHtml(item.text);
+        //   // this.onMessage(item);
+        //   // if (!this.lastTime || (item.createdAt - this.lastTime) > ChatService.MIN_MINUTES) {
+        //   //   item.timed = true;
+        //   // }
+        //   // this.lastTime = item.createdAt;
+        //   // return item;
+        // }.bind(this));
 
 
-        this.chatService.readMessage(this.user, ids, messages);
-        this.messages = messages;
-        this.updateMessage(scroll);
+        // this.chatService.readMessage(this.user, ids, messages);
+        // this.messages = messages;
+        // this.updateMessage(scroll);
       }
     });
+  }
+
+  updateFullMessage(messages, scroll) {
+    var ids = [];
+    messages = messages.map(function (item) {
+      item.createdAt = new Date(item.createdAt).getTime();
+      return item;
+    });
+    messages = messages.sort(function (a, b) {
+      return a.createdAt - b.createdAt;
+    });
+    messages = messages.map(function (item) {
+      if (!item.read) {
+        ids.push(item.id);
+      }
+      return this.updateItem(item);
+    }.bind(this));
+    this.messages = messages;
+    this.chatService.readMessage(this.user, ids, messages);
+    this.updateMessage(scroll);
   }
 
   updateItem(item) {
