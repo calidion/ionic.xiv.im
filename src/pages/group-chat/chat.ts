@@ -50,20 +50,13 @@ export class GroupChatPage {
     public navParams: NavParams) {
     this.group = navParams.get('group');
     this.user = navParams.get('user');
-    console.log(this.user);
-
-    var timer = null;
-
+    console.log(this.group);
     // From Socket.IO
-    this.chatService.subscribeMessage(message => {
+    this.chatService.subscribe(this.group.group, message => {
+      console.log('inside gorup chat message');
       this.newMessage = true;
-      if (timer) {
-        return;
-      }
-      timer = setTimeout(() => {
-        this.updateMessage(true);
-        timer = null;
-      }, 1000);
+      this.messages = this.messages.concat(message);
+      this.updateFullMessage(this.messages, true);
     });
 
     this.getMessageList(true);
@@ -102,29 +95,36 @@ export class GroupChatPage {
         }
 
         messages = this.messages.concat(messages);
-        messages = messages.map(function (item) {
-          item.createdAt = new Date(item.createdAt).getTime();
-          return item;
-        });
-        messages = messages.sort(function (a, b) {
-          return a.createdAt - b.createdAt;
-        });
-        messages = messages.map(function (item) {
-          return this.updateItem(item);
-          // item.timeText = moment(item.createdAt).format('LL[ ]LT');
-          // item.timeStatus = moment(item.createdAt).format('MM-DD HH:mm');
-          // item.html = converter.makeHtml(item.text);
-          // this.onMessage(item);
-          // if (!lastTime || (item.createdAt - lastTime) > GroupChatService.MIN_MINUTES) {
-          //   item.timed = true;
-          // }
-          // lastTime = item.createdAt;
-          // return item;
-        }.bind(this));
-        this.messages = messages;
-        this.updateMessage(scroll);
+        this.updateFullMessage(messages, true);
+
+        // messages = messages.map(function (item) {
+        //   item.createdAt = new Date(item.createdAt).getTime();
+        //   return item;
+        // });
+        // messages = messages.sort(function (a, b) {
+        //   return a.createdAt - b.createdAt;
+        // });
+        // messages = messages.map(function (item) {
+        //   return this.updateItem(item);
+        // }.bind(this));
+        // this.messages = messages;
+        // this.updateMessage(scroll);
       }
     });
+  }
+  updateFullMessage(messages, scroll) {
+    messages = messages.map(function (item) {
+      item.createdAt = new Date(item.createdAt).getTime();
+      return item;
+    });
+    messages = messages.sort(function (a, b) {
+      return a.createdAt - b.createdAt;
+    });
+    messages = messages.map(function (item) {
+      return this.updateItem(item);
+    }.bind(this));
+    this.messages = messages;
+    this.updateMessage(scroll);
   }
 
   updateItem(item) {
@@ -150,8 +150,8 @@ export class GroupChatPage {
   }
 
   onMessage(message) {
-    console.log(message.sender);
-    console.log(this.user);
+    // console.log(message.sender);
+    // console.log(this.user);
     if (message.sender.id === this.user.id) {
       message.type = 'to';
     } else {

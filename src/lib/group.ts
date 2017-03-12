@@ -32,8 +32,7 @@ export class GroupService extends Request {
     return this._post('/group/create', { name: name, desc: desc });
   }
   invite(group, email) {
-    return this._post('/group/member/invite', { group: group, email: email });
-
+    return this._post('/group/member/invite', { group: String(group), email: email });
   }
   members(group, page = 1, limit = 10) {
     let url = '/group/member/list'

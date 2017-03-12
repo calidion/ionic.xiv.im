@@ -10,7 +10,8 @@ import 'rxjs/add/operator/toPromise';
 
 export class Request {
   static socket
-  cbs = []
+  messageCallbacks = []
+  groupMessageCallbacks = []
   observable
   protected static url: string;
   protected static urlSocketIO: string;
@@ -30,12 +31,14 @@ export class Request {
   constructor(protected http: Http) {
     Request.initUrl();
     Request.initSocketIO();
-    this.observable = Observable.fromEvent(Request.socket, 'message');
-    this.observable.subscribe((json) => {
-      for (let i = 0; this.cbs.length > i; i++) {
-        this.cbs[i](json);
-      }
-    });
+    this.listenEvent('message', this.messageCallbacks);
+    this.listenEvent('group-message', this.groupMessageCallbacks);
+    // this.observable = Observable.fromEvent(Request.socket, 'message');
+    // this.observable.subscribe((json) => {
+    //   for (let i = 0; this.messageCallbacks.length > i; i++) {
+    //     this.messageCallbacks[i](json);
+    //   }
+    // });
   }
 
   static setUrl(host, ssl = false) {
@@ -60,12 +63,34 @@ export class Request {
 
   static initSocketIO() {
     if (!Request.socket) {
-      // Request.socket = io(Request.urlSocketIO);
+      // Request.socket = io.connect(Request.urlSocketIO, {transports: ['websocket'], upgrade: false});
+      Request.socket = io.connect(Request.urlSocketIO);
     }
   }
 
+  listenEvent(event, callbacks) {
+    var observable = Observable.fromEvent(Request.socket, event);
+    observable.subscribe((json) => {
+      for (let i = 0; callbacks.length > i; i++) {
+        callbacks[i](json);
+      }
+    });
+  }
+
   subscribeMessage(cb) {
-    this.cbs.push(cb);
+    this.messageCallbacks.push(cb);
+    this.messageCallbacks = this.uniqueArr(this.messageCallbacks);
+  }
+
+  uniqueArr(anArr) {
+    return anArr.filter(function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    });
+  }
+
+  subscribeGroupMessage(cb) {
+    this.groupMessageCallbacks.push(cb);
+    this.groupMessageCallbacks = this.uniqueArr(this.groupMessageCallbacks);
   }
 
   onError(error: Response | any) {

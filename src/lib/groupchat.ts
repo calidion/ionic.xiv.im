@@ -16,8 +16,26 @@ export class GroupChatService extends Request {
   userMessage
   static MIN_MINUTES = 10 * 60 * 6000
 
+  subscribers = {
+
+  };
+
   constructor(protected http: Http) {
     super(http);
+    this.subscribeGroupMessage(message => {
+      var group = message.group;
+      console.log('group', group);
+      var subscribers = this.subscribers[group.id];
+      console.log(subscribers);
+      if (subscribers && subscribers.length) {
+        console.log('subscribe found', subscribers);
+        for (var i = 0; i < subscribers.length; i++) {
+          var cb = subscribers[i];
+          console.log('callback found');
+          cb && cb(message);
+        }
+      }
+    });
   }
 
   getUsers(user) {
@@ -100,4 +118,16 @@ export class GroupChatService extends Request {
     var url = '/group/message/list?group=' + group.id + '&page=' + page;
     return this._get(url);
   }
+
+  subscribe(group, cb) {
+    console.log('subscribe group messages', group);
+    var subs = this.subscribers[group.id];
+    if (!subs) {
+      this.subscribers[group.id] = [];
+    }
+    this.subscribers[group.id].push(cb);
+    this.subscribers[group.id] = this.uniqueArr(this.subscribers[group.id]);
+  }
+
+
 }
