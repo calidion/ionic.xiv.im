@@ -50,16 +50,15 @@ export class Request {
       case 'forum.webfullstack.me':
       default:
         localStorage.setItem('url', 'https://' + host);
-        localStorage.setItem('url-socket.io', 'wss://' + host + ':8443');
+        localStorage.setItem('url-socket.io', 'wss://forim-pptm.rhcloud.com:8443');
         break;
     }
     Request.initUrl();
   }
 
   static initUrl() {
-    var host = 'forum.webfullstack.me';
-    Request.url = localStorage.getItem('url') || 'https://' + host;
-    Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'wss://' + host;
+    Request.url = localStorage.getItem('url') || 'https://server.xiv.im';
+    Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'wss://server.xiv.im';
   }
 
   static initSocketIO() {
