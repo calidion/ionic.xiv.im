@@ -38,4 +38,7 @@ export class UserService extends Request {
   removeFriend(id) {
     return this._post('/friend/remove', { id: id });
   }
+  logout() {
+    return this._get('/user/logout');
+  }
 }

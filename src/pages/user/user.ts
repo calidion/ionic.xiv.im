@@ -5,6 +5,8 @@ import { Request } from '../../lib/request'
 import { UserDetailsPage } from './details'
 import { UserPasswordResetPage } from './password/reset';
 import { AboutPage } from '../about/about';
+import { ProgressService } from '../../lib/ui/progresses'
+
 
 /*
   Generated class for the User page.
@@ -20,7 +22,10 @@ import { AboutPage } from '../about/about';
 export class UserPage {
   user: JSON
   server
-  constructor(public navCtrl: NavController, navParams: NavParams, userService: UserService) {
+  constructor(public navCtrl: NavController,
+    public progress: ProgressService,
+    navParams: NavParams,
+    public userService: UserService) {
     this.user = navParams.get('user')
 
     if (!this.user) {
@@ -50,13 +55,16 @@ export class UserPage {
     this.navCtrl.push(AboutPage);
   }
   onServerChange() {
-    var ssl = false;
-    switch (this.server) {
-      case 'server.xiv.im':
-        ssl = true;
-        break;
-    }
-    Request.setUrl(this.server, ssl);
+    Request.setUrl(this.server);
     location.reload();
+  }
+
+  logout() {
+    this.progress.show('正在退出...');
+    let observable = this.userService.logout();
+    observable.subscribe(() => {
+      this.progress.stop();
+      location.reload();
+    })
   }
 }

@@ -13,10 +13,10 @@ let win;
 
 const server = express();
 
-server.use('/file', express.static(__dirname + '/../www'));
+server.use('/app', express.static(__dirname + '/../www'));
 
 server.use('/', (req, res) => {
-  res.send('Hello Inoic!');
+  res.send('欢迎使用!');
 });
 server.listen(9500);
 
@@ -25,7 +25,7 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600 });
 
-  var url = 'http://localhost:9500/file';
+  var url = 'http://localhost:9500/app';
   // url = 'file://' + __dirname + '/../www/index.html'
   var Args = process.argv.slice(2);
   Args.forEach(function (val) {
