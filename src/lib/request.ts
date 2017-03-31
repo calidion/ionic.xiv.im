@@ -42,23 +42,24 @@ export class Request {
   }
 
   static setUrl(host, ssl = false) {
-    if (ssl) {
-      localStorage.setItem('url', 'https://' + host);
-      localStorage.setItem('url-socket.io', 'wss://' + host);
-    } else {
-      localStorage.setItem('url', 'http://' + host);
-      localStorage.setItem('url-socket.io', 'ws://' + host);
+    switch (host) {
+      case 'server.xiv.im':
+        localStorage.setItem('url', 'https://' + host);
+        localStorage.setItem('url-socket.io', 'wss://' + host);
+        break;
+      case 'forum.webfullstack.me':
+      default:
+        localStorage.setItem('url', 'https://' + host);
+        localStorage.setItem('url-socket.io', 'wss://' + host + ':8443');
+        break;
     }
-
     Request.initUrl();
   }
 
   static initUrl() {
     var host = 'forum.webfullstack.me';
-    // var host = 'server.xiv.im';
-    // var host = 'localhost:8101';
     Request.url = localStorage.getItem('url') || 'https://' + host;
-    Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'https://' + host;
+    Request.urlSocketIO = localStorage.getItem('url-socket.io') || 'wss://' + host;
   }
 
   static initSocketIO() {
